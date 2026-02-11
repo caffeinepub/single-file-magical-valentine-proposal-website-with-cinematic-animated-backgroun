@@ -1,0 +1,13 @@
+{
+  "backend/main.mo": "Empty Motoko actor with no methods defined.",
+  "feature_evidence.json": "Lists features, associated files, components, and test IDs for proposal-flow, audio, and performance requirements.",
+  "frontend-file-summaries.txt": "Provides high‑level descriptions of frontend/index.html and App.tsx behavior for build planning.",
+  "frontend/index.css": "Tailwind base variables and theme overrides defining color tokens, dark mode values, and global styles.",
+  "frontend/index.html": "Main standalone Valentine proposal page with animations, evasive No button logic, audio, and interactive flow.",
+  "frontend/src/App.tsx": "React component that immediately redirects to index.html while displaying a themed loading screen.",
+  "frontend/src/hooks/useActor.ts": "React hook that creates and manages an authenticated or anonymous backend actor using react‑query.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Context and hooks for Internet Identity login, identity persistence, and AuthClient lifecycle management.",
+  "frontend/src/main.tsx": "App entry point wiring React, InternetIdentityProvider, QueryClient, and global styles.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending colors, animations, and layout utilities, with dark mode and plugins.",
+  "project_state.json": "Stores the project’s current state, requirements, issues, and architectural notes for a single‑file animated Valentine proposal site. Defines existing features and flags the file as a request for fixes and improvements."
+}

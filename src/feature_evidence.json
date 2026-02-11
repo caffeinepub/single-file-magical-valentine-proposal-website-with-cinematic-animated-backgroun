@@ -1,0 +1,77 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-fix-the-no-button-evasion-behavior-so-it-reliably-evades-repeatedly-not-just-once-on-both-desktop-mouse-hover-click-and-mobile-tap-touch-staying-responsive-for-the-entire-proposal-flow",
+      "featureTitle": "Fix the “No” button evasion behavior so it reliably evades repeatedly (not just once) on both desktop (mouse hover/click) and mobile (tap/touch), staying responsive for the entire proposal flow.",
+      "files": [
+        "frontend/index.html"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-proposal-flow-so-the-no-button-performs-at-least-7-successful-evasions-before-revealing-the-yes-button-and-ensure-the-yes-button-reveal-is-consistent-across-mobile-and-desktop",
+      "featureTitle": "Update the proposal flow so the “No” button performs at least 7 successful evasions before revealing the “Yes” button, and ensure the “Yes” button reveal is consistent across mobile and desktop.",
+      "files": [
+        "frontend/index.html"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-replace-the-current-background-audio-noise-with-a-soothing-romantic-instrumental-soundscape-that-is-less-annoying-with-mobile-desktop-friendly-volume-levels-and-smooth-fade-in-after-the-tap-to-start-interaction",
+      "featureTitle": "Replace the current background audio/noise with a soothing romantic instrumental soundscape that is less annoying, with mobile/desktop-friendly volume levels and smooth fade-in after the “Tap to Start” interaction.",
+      "files": [
+        "frontend/index.html"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-optimize-overall-runtime-performance-and-responsiveness-for-both-mobile-and-pc-focusing-on-animation-loops-canvas-rendering-and-interaction-handling-so-the-experience-stays-smooth-during-background-effects-and-repeated-no-evasions",
+      "featureTitle": "Optimize overall runtime performance and responsiveness for both mobile and PC, focusing on animation loops, canvas rendering, and interaction handling so the experience stays smooth during background effects and repeated “No” evasions.",
+      "files": [
+        "frontend/index.html"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Will You Be My Valentine? 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, 
+                oklch(0.25 0.15 320) 0%,
+                oklch(0.35 0.18 340) 25%,
+                oklch(0.45 0.12 350) 50%,
+                oklch(0.35 0.15 330) 75%,
+                oklch(0.25 0.12 310) 100%
+            );
+            position: relative;
+            touch-action: pan-y;
+            overscroll-behavior: none;
+        }
+
+        #backgroundCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #introOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                oklch(0.2 0.18 320) 0%,
+                oklch(0.3 0.2 340) 50%,
+                oklch(0.2 0.15 310) 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: pointer;
+            transition: opacity 1s ease-out;
+        }
+
+        #introOverlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-text {
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: oklch(0.95 0.05 340);
+            text-shadow: 0 0 30px oklch(0.7 0.2 340 / 0.8),
+                         0 0 60px oklch(0.6 0.25 330 / 0.6);
+            animation: pulse 2s ease-in-out infinite;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        #mainContent {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            touch-action: none;
+        }
+
+        #mainContent.visible {
+            opacity: 1;
+        }
+
+        .glass-card {
+            background: oklch(0.95 0.02 340 / 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid oklch(0.95 0.05 340 / 0.3);
+            border-radius: 32px;
+            padding: clamp(2rem, 5vw, 4rem);
+            box-shadow: 0 8px 32px oklch(0.1 0.1 320 / 0.4),
+                        0 0 80px oklch(0.5 0.2 340 / 0.2),
+                        inset 0 1px 0 oklch(1 0 0 / 0.2);
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+            position: relative;
+            animation: cardGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes cardGlow {
+            0%, 100% { box-shadow: 0 8px 32px oklch(0.1 0.1 320 / 0.4),
+                        0 0 80px oklch(0.5 0.2 340 / 0.2),
+                        inset 0 1px 0 oklch(1 0 0 / 0.2); }
+            50% { box-shadow: 0 8px 32px oklch(0.1 0.1 320 / 0.5),
+                        0 0 100px oklch(0.5 0.25 340 / 0.3),
+                        inset 0 1px 0 oklch(1 0 0 / 0.3); }
+        }
+
+        .proposal-text {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: oklch(0.98 0.03 340);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            text-shadow: 0 2px 20px oklch(0.5 0.2 340 / 0.5);
+            line-height: 1.4;
+        }
+
+        .message-text {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: oklch(0.85 0.08 340);
+            margin-bottom: 2rem;
+            min-height: 2em;
+            font-weight: 400;
+            text-shadow: 0 1px 10px oklch(0.5 0.15 340 / 0.4);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 1rem 3rem;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px oklch(0.3 0.1 340 / 0.3);
+            position: relative;
+            letter-spacing: 0.02em;
+            touch-action: none;
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, oklch(0.65 0.15 340), oklch(0.55 0.18 330));
+            color: oklch(0.98 0.02 340);
+            position: absolute;
+            transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            will-change: transform;
+        }
+
+        .btn-no:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px oklch(0.5 0.2 340 / 0.5);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, oklch(0.7 0.2 340), oklch(0.6 0.25 350));
+            color: oklch(0.98 0.02 340);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .btn-yes.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 40px oklch(0.6 0.25 340 / 0.6);
+        }
+
+        .final-message {
+            font-size: clamp(1.3rem, 3.5vw, 2rem);
+            color: oklch(0.98 0.03 340);
+            text-shadow: 0 0 30px oklch(0.7 0.2 340 / 0.8);
+            animation: sparkle 2s ease-in-out infinite;
+            line-height: 1.6;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { text-shadow: 0 0 30px oklch(0.7 0.2 340 / 0.8); }
+            50% { text-shadow: 0 0 50px oklch(0.7 0.25 340 / 1); }
+        }
+
+        .floating-decoration {
+            position: fixed;
+            font-size: 3rem;
+            pointer-events: none;
+            z-index: 5;
+            animation: floatUp 3s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-200px) rotate(360deg); }
+        }
+
+        #adminPanel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: oklch(0.95 0.02 340 / 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid oklch(0.95 0.05 340 / 0.5);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px oklch(0.1 0.1 320 / 0.6);
+            z-index: 2000;
+            display: none;
+            max-width: 90%;
+            width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        #adminPanel.visible {
+            display: block;
+        }
+
+        .admin-title {
+            font-size: 1.8rem;
+            color: oklch(0.3 0.15 340);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .admin-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-label {
+            display: block;
+            font-size: 1rem;
+            color: oklch(0.4 0.12 340);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: 1px solid oklch(0.7 0.05 340 / 0.3);
+            border-radius: 12px;
+            background: oklch(0.98 0.01 340 / 0.8);
+            color: oklch(0.2 0.1 340);
+        }
+
+        .admin-button {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 1rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-button-primary {
+            background: linear-gradient(135deg, oklch(0.65 0.2 340), oklch(0.55 0.25 330));
+            color: oklch(0.98 0.02 340);
+        }
+
+        .admin-button-secondary {
+            background: oklch(0.85 0.05 340);
+            color: oklch(0.3 0.15 340);
+        }
+
+        .admin-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px oklch(0.5 0.2 340 / 0.4);
+        }
+
+        .share-link {
+            background: oklch(0.95 0.02 340);
+            padding: 0.8rem;
+            border-radius: 8px;
+            word-break: break-all;
+            font-size: 0.9rem;
+            color: oklch(0.3 0.12 340);
+            margin-top: 1rem;
+            border: 1px solid oklch(0.7 0.05 340 / 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .glass-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 1rem;
+                min-height: 100px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+    
+    <div id="introOverlay">
+        <div class="intro-text">Tap to Start ✨</div>
+    </div>
+
+    <div id="mainContent">
+        <div class="glass-card" id="mainCard">
+            <div class="proposal-text" id="proposalText"></div>
+            <div class="message-text" id="messageText"></div>
+            <div class="button-container" id="buttonContainer">
+                <button class="btn btn-no" id="noButton">No</button>
+                <button class="btn btn-yes" id="yesButton">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminPanel">
+        <div class="admin-title">Admin Panel</div>
+        <div class="admin-field">
+            <label class="admin-label">Girlfriend Name</label>
+            <input type="text" class="admin-input" id="adminGirlfriendName" />
+        </div>
+        <div class="admin-field">
+            <label class="admin-label">Boyfriend Name</label>
+            <input type="text" class="admin-input" id="adminBoyfriendName" />
+        </div>
+        <div class="admin-field">
+            <label class="admin-label">Final Yes Message</label>
+            <input type="text" class="admin-input" id="adminFinalMessage" />
+        </div>
+        <div class="admin-field">
+            <label class="admin-label">Admin Password</label>
+            <input type="password" class="admin-input" id="adminPassword" />
+        </div>
+        <button class="admin-button admin-button-primary" id="saveSettings">Save Settings</button>
+        <button class="admin-button admin-button-secondary" id="generateLink">Generate Link</button>
+        <button class="admin-button admin-button-secondary" id="closeAdmin">Close</button>
+        <div id="shareLinkContainer"></div>
+    </div>
+
+    <script>
+        // Settings management
+        const DEFAULT_SETTINGS = {
+            girlfriendName: 'Beautiful',
+            boyfriendName: 'Your Secret Admirer',
+            finalMessage: 'I knew you would choose YES 💖',
+            adminPassword: '2026love'
+        };
+
+        let settings = { ...DEFAULT_SETTINGS };
+        let audioContext = null;
+        let backgroundMusic = null;
+        let evadeCount = 0;
+        let keyBuffer = '';
+        const SECRET_KEYWORD = 'akash';
+        const REQUIRED_EVADES = 7;
+        const CUTE_MESSAGES = [
+            'Really no?! 🥺',
+            'I can\'t believe this...',
+            'You are beautiful and cute! 💕',
+            'I\'m sorry, give me another chance! 🙏',
+            'Please reconsider... 💝',
+            'Are you sure about that? 😢',
+            'My heart is breaking... 💔',
+            'One more chance? 🌹'
+        ];
+
+        // Load settings from localStorage or URL
+        function loadSettings() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data');
+            
+            if (dataParam) {
+                try {
+                    const decoded = atob(dataParam);
+                    const imported = JSON.parse(decoded);
+                    settings = { ...DEFAULT_SETTINGS, ...imported };
+                    localStorage.setItem('valentineSettings', JSON.stringify(settings));
+                } catch (e) {
+                    console.error('Failed to decode settings');
+                }
+            } else {
+                const stored = localStorage.getItem('valentineSettings');
+                if (stored) {
+                    try {
+                        settings = { ...DEFAULT_SETTINGS, ...JSON.parse(stored) };
+                    } catch (e) {
+                        console.error('Failed to parse stored settings');
+                    }
+                }
+            }
+            
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('proposalText').textContent = 
+                `${settings.girlfriendName}, Will you be my Valentine?`;
+        }
+
+        // Romantic instrumental audio synthesis
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                playBackgroundMusic();
+            } catch (e) {
+                console.log('Audio not available');
+            }
+        }
+
+        function playBackgroundMusic() {
+            if (!audioContext) return;
+            
+            try {
+                const masterGain = audioContext.createGain();
+                masterGain.connect(audioContext.destination);
+                
+                // Smooth fade-in
+                masterGain.gain.setValueAtTime(0, audioContext.currentTime);
+                masterGain.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 3);
+                
+                // Create a soothing romantic pad with multiple layers
+                const layers = [];
+                
+                // Base pad - warm low frequency
+                const bass = createOscillatorLayer(110, 'sine', 0.15, masterGain);
+                layers.push(bass);
+                
+                // Mid harmony - perfect fifth
+                const mid = createOscillatorLayer(165, 'sine', 0.12, masterGain);
+                layers.push(mid);
+                
+                // High shimmer - octave + third
+                const high = createOscillatorLayer(220, 'triangle', 0.08, masterGain);
+                layers.push(high);
+                
+                // Add subtle vibrato to high layer
+                const vibrato = audioContext.createOscillator();
+                const vibratoGain = audioContext.createGain();
+                vibrato.frequency.value = 4;
+                vibratoGain.gain.value = 3;
+                vibrato.connect(vibratoGain);
+                vibratoGain.connect(high.osc.frequency);
+                vibrato.start();
+                
+                // Gentle filter for warmth
+                const filter = audioContext.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 800;
+                filter.Q.value = 1;
+                masterGain.connect(filter);
+                filter.connect(audioContext.destination);
+                
+                // Disconnect direct connection
+                masterGain.disconnect(audioContext.destination);
+                
+                backgroundMusic = { layers, masterGain, vibrato };
+            } catch (e) {
+                console.log('Background music failed');
+            }
+        }
+
+        function createOscillatorLayer(freq, type, volume, destination) {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.type = type;
+            osc.frequency.value = freq;
+            gain.gain.value = volume;
+            
+            osc.connect(gain);
+            gain.connect(destination);
+            
+            osc.start();
+            
+            return { osc, gain };
+        }
+
+        function playCuteSound() {
+            if (!audioContext) return;
+            
+            try {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.frequency.setValueAtTime(800, audioContext.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
+                
+                gain.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.2);
+            } catch (e) {
+                console.log('Sound effect failed');
+            }
+        }
+
+        // Canvas animation - optimized
+        const canvas = document.getElementById('backgroundCanvas');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let animationId;
+        let lastTime = 0;
+        const targetFPS = 60;
+        const frameInterval = 1000 / targetFPS;
+
+        function resizeCanvas() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.scale(dpr, dpr);
+        }
+
+        resizeCanvas();
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeCanvas, 100);
+        });
+
+        // Particles - optimized count based on screen size
+        const isMobile = window.innerWidth < 768;
+        const particleCount = isMobile ? 15 : 25;
+
+        class Butterfly {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 1;
+                this.size = 15 + Math.random() * 15;
+                this.wingAngle = 0;
+                this.hue = 320 + Math.random() * 40;
+                this.time = Math.random() * Math.PI * 2;
+            }
+
+            update(dt) {
+                this.time += dt * 0.003;
+                this.x += this.vx;
+                this.y += this.vy + Math.sin(this.time) * 0.5;
+                this.wingAngle = Math.sin(this.time * 5) * 0.5;
+
+                if (this.x < -50 || this.x > window.innerWidth + 50 || 
+                    this.y < -50 || this.y > window.innerHeight + 50) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = `oklch(0.7 0.2 ${this.hue} / 0.5)`;
+                
+                // Left wing
+                ctx.save();
+                ctx.rotate(this.wingAngle);
+                ctx.fillStyle = `oklch(0.7 0.2 ${this.hue} / 0.6)`;
+                ctx.beginPath();
+                ctx.ellipse(-this.size/2, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+                
+                // Right wing
+                ctx.save();
+                ctx.rotate(-this.wingAngle);
+                ctx.fillStyle = `oklch(0.7 0.2 ${this.hue + 10} / 0.6)`;
+                ctx.beginPath();
+                ctx.ellipse(this.size/2, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+                
+                ctx.restore();
+            }
+        }
+
+        class Sparkle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
+                this.size = 2 + Math.random() * 3;
+                this.life = 0;
+                this.maxLife = 2000 + Math.random() * 2000;
+                this.hue = 320 + Math.random() * 40;
+            }
+
+            update(dt) {
+                this.life += dt;
+                if (this.life > this.maxLife) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                const alpha = Math.sin((this.life / this.maxLife) * Math.PI);
+                ctx.save();
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `oklch(0.8 0.2 ${this.hue} / ${alpha * 0.8})`;
+                ctx.fillStyle = `oklch(0.9 0.15 ${this.hue} / ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * window.innerWidth;
+                this.y = -20;
+                this.vx = (Math.random() - 0.5) * 1;
+                this.vy = 1 + Math.random() * 2;
+                this.size = 8 + Math.random() * 8;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.05;
+                this.hue = 340 + Math.random() * 20;
+                this.time = Math.random() * Math.PI * 2;
+            }
+
+            update(dt) {
+                this.time += dt * 0.002;
+                this.x += this.vx + Math.sin(this.time) * 0.5;
+                this.y += this.vy;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > window.innerHeight + 20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.fillStyle = `oklch(0.75 0.18 ${this.hue} / 0.7)`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = `oklch(0.7 0.2 ${this.hue} / 0.4)`;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const butterflies = Array.from({ length: Math.floor(particleCount * 0.3) }, () => new Butterfly());
+        const sparkles = Array.from({ length: Math.floor(particleCount * 0.4) }, () => new Sparkle());
+        const petals = Array.from({ length: Math.floor(particleCount * 0.3) }, () => new Petal());
+
+        function animate(currentTime) {
+            const deltaTime = currentTime - lastTime;
+            
+            if (deltaTime >= frameInterval) {
+                lastTime = currentTime - (deltaTime % frameInterval);
+                
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                
+                butterflies.forEach(b => {
+                    b.update(deltaTime);
+                    b.draw();
+                });
+                
+                sparkles.forEach(s => {
+                    s.update(deltaTime);
+                    s.draw();
+                });
+                
+                petals.forEach(p => {
+                    p.update(deltaTime);
+                    p.draw();
+                });
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Intro overlay
+        const introOverlay = document.getElementById('introOverlay');
+        const mainContent = document.getElementById('mainContent');
+
+        introOverlay.addEventListener('click', () => {
+            introOverlay.classList.add('hidden');
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+                initAudio();
+                animate(0);
+            }, 500);
+        });
+
+        // No button evasion - FIXED for reliable repeated evasions
+        const noButton = document.getElementById('noButton');
+        const yesButton = document.getElementById('yesButton');
+        const messageText = document.getElementById('messageText');
+        const buttonContainer = document.getElementById('buttonContainer');
+
+        function getRandomPosition() {
+            const container = buttonContainer.getBoundingClientRect();
+            const button = noButton.getBoundingClientRect();
+            
+            // Safe margins from viewport edges
+            const margin = 20;
+            const maxX = window.innerWidth - button.width - margin;
+            const maxY = window.innerHeight - button.height - margin;
+            
+            let newX, newY;
+            let attempts = 0;
+            const maxAttempts = 20;
+            
+            do {
+                newX = margin + Math.random() * (maxX - margin);
+                newY = margin + Math.random() * (maxY - margin);
+                attempts++;
+            } while (attempts < maxAttempts && isNearYesButton(newX, newY, button.width, button.height));
+            
+            return { x: newX, y: newY };
+        }
+
+        function isNearYesButton(x, y, width, height) {
+            if (!yesButton.classList.contains('visible')) return false;
+            
+            const yesRect = yesButton.getBoundingClientRect();
+            const minDistance = 150;
+            
+            const centerX = x + width / 2;
+            const centerY = y + height / 2;
+            const yesCenterX = yesRect.left + yesRect.width / 2;
+            const yesCenterY = yesRect.top + yesRect.height / 2;
+            
+            const distance = Math.sqrt(
+                Math.pow(centerX - yesCenterX, 2) + 
+                Math.pow(centerY - yesCenterY, 2)
+            );
+            
+            return distance < minDistance;
+        }
+
+        function evadeNoButton(e) {
+            if (evadeCount >= REQUIRED_EVADES) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            evadeCount++;
+            
+            const pos = getRandomPosition();
+            noButton.style.left = pos.x + 'px';
+            noButton.style.top = pos.y + 'px';
+            
+            const messageIndex = Math.min(evadeCount - 1, CUTE_MESSAGES.length - 1);
+            messageText.textContent = CUTE_MESSAGES[messageIndex];
+            
+            playCuteSound();
+            createFloatingHeart(pos.x, pos.y);
+            
+            if (evadeCount >= REQUIRED_EVADES) {
+                setTimeout(() => {
+                    yesButton.classList.add('visible');
+                    messageText.textContent = 'Okay, I\'ll give you one last chance... 💝';
+                }, 300);
+            }
+        }
+
+        // Robust event handling for both desktop and mobile
+        noButton.addEventListener('pointerenter', evadeNoButton);
+        noButton.addEventListener('pointerdown', evadeNoButton);
+        noButton.addEventListener('touchstart', evadeNoButton, { passive: false });
+        noButton.addEventListener('mouseenter', evadeNoButton);
+        noButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            evadeNoButton(e);
+        });
+
+        function createFloatingHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-decoration';
+            heart.textContent = '💖';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        }
+
+        // Yes button
+        yesButton.addEventListener('click', () => {
+            playCelebration();
+        });
+
+        function playCelebration() {
+            const mainCard = document.getElementById('mainCard');
+            mainCard.innerHTML = `
+                <div class="final-message">
+                    ${settings.finalMessage}
+                    <br><br>
+                    💕 ${settings.boyfriendName} 💕
+                </div>
+            `;
+            
+            createHeartFireworks();
+            
+            if (audioContext && backgroundMusic) {
+                try {
+                    backgroundMusic.masterGain.gain.linearRampToValueAtTime(
+                        0.15, 
+                        audioContext.currentTime + 2
+                    );
+                } catch (e) {
+                    console.log('Audio adjustment failed');
+                }
+            }
+        }
+
+        function createHeartFireworks() {
+            const colors = ['💖', '💕', '💗', '💓', '💝', '✨', '🌟', '⭐'];
+            const count = isMobile ? 30 : 50;
+            
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-decoration';
+                    heart.textContent = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.left = (Math.random() * window.innerWidth) + 'px';
+                    heart.style.top = (Math.random() * window.innerHeight) + 'px';
+                    heart.style.fontSize = (2 + Math.random() * 3) + 'rem';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 100);
+            }
+        }
+
+        // Admin panel
+        const adminPanel = document.getElementById('adminPanel');
+        
+        document.addEventListener('keypress', (e) => {
+            keyBuffer += e.key.toLowerCase();
+            if (keyBuffer.length > SECRET_KEYWORD.length) {
+                keyBuffer = keyBuffer.slice(-SECRET_KEYWORD.length);
+            }
+            if (keyBuffer === SECRET_KEYWORD) {
+                adminPanel.classList.add('visible');
+                loadAdminSettings();
+                keyBuffer = '';
+            }
+        });
+
+        function loadAdminSettings() {
+            document.getElementById('adminGirlfriendName').value = settings.girlfriendName;
+            document.getElementById('adminBoyfriendName').value = settings.boyfriendName;
+            document.getElementById('adminFinalMessage').value = settings.finalMessage;
+        }
+
+        document.getElementById('saveSettings').addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (password !== settings.adminPassword) {
+                alert('Incorrect password!');
+                return;
+            }
+            
+            settings.girlfriendName = document.getElementById('adminGirlfriendName').value;
+            settings.boyfriendName = document.getElementById('adminBoyfriendName').value;
+            settings.finalMessage = document.getElementById('adminFinalMessage').value;
+            
+            localStorage.setItem('valentineSettings', JSON.stringify(settings));
+            updateUI();
+            alert('Settings saved!');
+        });
+
+        document.getElementById('generateLink').addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (password !== settings.adminPassword) {
+                alert('Incorrect password!');
+                return;
+            }
+            
+            const dataToShare = {
+                girlfriendName: settings.girlfriendName,
+                boyfriendName: settings.boyfriendName,
+                finalMessage: settings.finalMessage
+            };
+            
+            const encoded = btoa(JSON.stringify(dataToShare));
+            const shareUrl = `${window.location.origin}${window.location.pathname}?data=${encoded}`;
+            
+            const container = document.getElementById('shareLinkContainer');
+            container.innerHTML = `
+                <div class="share-link">
+                    <strong>Share this link:</strong><br>
+                    <a href="${shareUrl}" target="_blank">${shareUrl}</a>
+                </div>
+            `;
+        });
+
+        document.getElementById('closeAdmin').addEventListener('click', () => {
+            adminPanel.classList.remove('visible');
+        });
+
+        // Initialize
+        loadSettings();
+    </script>
+</body>
+</html>

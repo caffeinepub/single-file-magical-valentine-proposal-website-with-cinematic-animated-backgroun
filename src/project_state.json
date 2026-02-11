@@ -1,0 +1,216 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Single-file (index.html only) magical Disney-fantasy Valentine proposal landing page for Netlify with cinematic animated background (butterflies, fairy particles, petals, glow), tap-to-start intro with music, interactive No/Yes proposal flow with evasive No button and messages, Yes celebration effects, plus a hidden keyword/password admin panel that persists settings via localStorage and supports shareable base64-encoded links.",
+  "architectural_notes": [
+    "All functionality must be contained in a single index.html (HTML/CSS/JS/assets via inline/base64) with no backend; must run when deployed as static site (e.g., Netlify).",
+    "Persist editable configuration in localStorage; optionally override/seed configuration via base64-encoded ?data= query parameter for shareable links.",
+    "Audio must start only after explicit user interaction (Tap to Start) and then fade in to comply with browser autoplay policies."
+  ],
+  "known_issues": [
+    "No button evade behavior is bugged: it only evades/pops once and then stops responding.",
+    "Background noise/audio is perceived as annoying; needs replacement with a soothing romantic instrumental.",
+    "Site needs better optimization for both mobile and PC usage (performance/responsiveness)."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-complete-fully-working-single-file-website-as-index-html-only-one-file-that-runs-when-uploaded-directly-to-netlify-with-no-backend-dependencies-uses-utf-8-encoding-is-mobile-responsive-smooth-target-60fps-and-has-clean-organized-professional-code-structure-html-css-js-all-in-one-file",
+      "title": "Create a COMPLETE, fully working single-file website as `index.html` (only one file) that runs when uploaded directly to Netlify with no backend dependencies, uses UTF-8 encoding, is mobile responsive, smooth (target 60fps), and has clean, organized, professional code structure (HTML/CSS/JS all in one file).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-premium-disney-fantasy-inspired-visual-theme-soft-purple-pink-gold-lighting-cinematic-gradients-elegant-glassmorphism-applied-consistently-across-background-card-typography-and-effects-keep-it-romantic-and-premium-not-childish-not-basic",
+      "title": "Implement a premium Disney-fantasy-inspired visual theme (soft purple/pink/gold lighting, cinematic gradients, elegant glassmorphism) applied consistently across background, card, typography, and effects; keep it romantic and premium (not childish, not basic).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-magical-animated-background-experience-that-includes-1-realistic-animated-butterflies-with-visible-wing-flapping-where-wings-animate-separately-butterflies-float-across-the-screen-in-curved-paths-and-have-a-slight-glow-2-a-fairy-particle-system-with-glowing-sparkles-some-particles-with-soft-trails-random-movement-with-a-depth-parallax-effect-and-shimmer-3-floating-flower-petals-drifting-slowly-downward-with-parallax-depth-4-a-soft-cinematic-ambient-glow-overlay-above-the-scene",
+      "title": "Create a magical animated background experience that includes: (1) realistic animated butterflies with visible wing flapping where wings animate separately, butterflies float across the screen in curved paths, and have a slight glow; (2) a fairy particle system with glowing sparkles, some particles with soft trails, random movement with a depth/parallax effect, and shimmer; (3) floating flower petals drifting slowly downward with parallax depth; (4) a soft cinematic ambient glow overlay above the scene.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-intro-flow-show-a-full-screen-tap-to-start-overlay-on-first-load-after-user-interaction-fade-in-background-music-and-or-romantic-ambient-background-noise-then-smoothly-transition-fade-into-the-main-interface-while-starting-continuing-background-animations",
+      "title": "Add an intro flow: show a full-screen “Tap to Start ✨” overlay on first load; after user interaction, fade in background music (and/or romantic ambient background noise), then smoothly transition (fade) into the main interface while starting/continuing background animations.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-main-interface-as-a-centered-premium-glass-card-with-blur-glow-effects-showing-the-proposal-prompt-text-girlfriend-name-will-you-be-my-valentine-where-girlfriend-name-is-configurable-via-settings-defaults-provided",
+      "title": "Render the main interface as a centered premium glass card with blur/glow effects showing the proposal prompt text: “[Girlfriend Name], Will you be my Valentine?” where [Girlfriend Name] is configurable via settings (defaults provided).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-proposal-button-logic-initially-show-only-a-no-button-when-the-user-attempts-to-hover-or-click-no-the-button-must-evade-by-jumping-running-away-smoothly-to-random-locations-within-the-viewport-while-rotating-through-cute-english-messages-e-g-really-no-i-can-t-believe-this-you-are-beautiful-and-cute-i-m-sorry-give-me-another-chance-etc-and-play-a-cute-sneaky-sound-on-each-evade-after-5-6-evade-attempts-reveal-a-yes-button-with-a-soft-animation-and-keep-the-ui-usable-on-mobile-tap-interactions",
+      "title": "Implement the proposal button logic: initially show only a “No” button. When the user attempts to hover or click “No”, the button must evade by jumping/running away smoothly to random locations within the viewport while rotating through cute English messages (e.g., “Really no?!”, “I can’t believe this…”, “You are beautiful and cute”, “I’m sorry, give me another chance”, etc.), and play a “cute sneaky” sound on each evade. After 5–6 evade attempts, reveal a “Yes” button with a soft animation and keep the UI usable on mobile (tap interactions).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-each-no-evade-interaction-add-extra-romantic-cute-visual-elements-e-g-teddy-bear-chocolates-hugs-themed-cute-items-that-float-around-the-screen-briefly-with-gentle-motion-and-glow-without-degrading-performance",
+      "title": "On each “No” evade interaction, add extra romantic/cute visual elements (e.g., teddy bear, chocolates, hugs-themed cute items) that float around the screen briefly with gentle motion and glow, without degrading performance.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-yes-click-celebration-when-yes-is-clicked-trigger-a-heart-explosion-fireworks-effect-using-particles-physics-with-hearts-bursting-outward-from-the-center-glowing-and-animating-then-display-a-final-message-with-soft-glow-and-sparkles-around-the-text-i-knew-you-would-choose-yes-nsorry-from-boyfriend-name-where-boyfriend-name-is-configurable-via-settings-defaults-provided",
+      "title": "Implement the YES click celebration: when “Yes” is clicked, trigger a heart explosion/fireworks effect using particles/physics with hearts bursting outward from the center, glowing and animating; then display a final message with soft glow and sparkles around the text: “I knew you would choose YES 💖\\nSorry from [Boyfriend Name]” where [Boyfriend Name] is configurable via settings (defaults provided).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-hidden-admin-system-with-no-visible-admin-button-detect-a-secret-keyword-typed-anywhere-on-the-page-example-keyword-akash-when-detected-show-a-password-prompt-default-password-2026love-after-successful-login-show-an-admin-panel-that-allows-editing-girlfriend-name-boyfriend-name-final-yes-message-and-admin-password-persist-these-settings-permanently-using-localstorage",
+      "title": "Implement a hidden admin system with no visible admin button: detect a secret keyword typed anywhere on the page (example keyword: “akash”); when detected, show a password prompt (default password: 2026love). After successful login, show an admin panel that allows editing: Girlfriend Name, Boyfriend Name, Final Yes Message, and Admin Password. Persist these settings permanently using localStorage.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-shareable-link-generation-in-the-admin-panel-generate-a-url-containing-data-where-the-settings-are-encoded-using-base64-include-a-copy-link-button-on-page-load-if-a-data-parameter-exists-decode-it-and-apply-settings-automatically-and-persist-them-to-localstorage",
+      "title": "Add shareable link generation in the admin panel: generate a URL containing `?data=...` where the settings are encoded using base64; include a “Copy Link” button. On page load, if a `?data=` parameter exists, decode it and apply settings automatically (and persist them to localStorage).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-implementation-avoids-broken-external-links-and-prioritizes-performance-use-optimized-canvas-css-js-animation-loops-minimize-layout-thrashing-and-provide-graceful-fallbacks-if-any-external-asset-fails-e-g-audio",
+      "title": "Ensure the implementation avoids broken external links and prioritizes performance: use optimized Canvas/CSS/JS animation loops, minimize layout thrashing, and provide graceful fallbacks if any external asset fails (e.g., audio).",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-no-button-evasion-behavior-so-it-reliably-evades-repeatedly-not-just-once-on-both-desktop-mouse-hover-click-and-mobile-tap-touch-staying-responsive-for-the-entire-proposal-flow",
+      "title": "Fix the “No” button evasion behavior so it reliably evades repeatedly (not just once) on both desktop (mouse hover/click) and mobile (tap/touch), staying responsive for the entire proposal flow.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-proposal-flow-so-the-no-button-performs-at-least-7-successful-evasions-before-revealing-the-yes-button-and-ensure-the-yes-button-reveal-is-consistent-across-mobile-and-desktop",
+      "title": "Update the proposal flow so the “No” button performs at least 7 successful evasions before revealing the “Yes” button, and ensure the “Yes” button reveal is consistent across mobile and desktop.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-background-audio-noise-with-a-soothing-romantic-instrumental-soundscape-that-is-less-annoying-with-mobile-desktop-friendly-volume-levels-and-smooth-fade-in-after-the-tap-to-start-interaction",
+      "title": "Replace the current background audio/noise with a soothing romantic instrumental soundscape that is less annoying, with mobile/desktop-friendly volume levels and smooth fade-in after the “Tap to Start” interaction.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optimize-overall-runtime-performance-and-responsiveness-for-both-mobile-and-pc-focusing-on-animation-loops-canvas-rendering-and-interaction-handling-so-the-experience-stays-smooth-during-background-effects-and-repeated-no-evasions",
+      "title": "Optimize overall runtime performance and responsiveness for both mobile and PC, focusing on animation loops, canvas rendering, and interaction handling so the experience stays smooth during background effects and repeated “No” evasions.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create single-file responsive Valentine proposal website (index.html only) that runs on Netlify with UTF-8 and clean professional structure.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement Disney-fantasy cinematic background: animated wing-flapping butterflies with curved flight paths and glow, fairy sparkles/particles with trails and depth, drifting flower petals with parallax, and ambient glow overlay.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add tap-to-start full-screen intro that transitions smoothly to main UI and starts/fades in background music after user interaction.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Build premium center glassmorphism card (blur/glow) with customizable prompt text: \"[Girlfriend Name], Will you be my Valentine?\"",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Implement button logic: initially only No button; on hover/click it evasively jumps smoothly with rotating cute messages and sneaky sound; after several attempts reveal Yes button with soft animation.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "On Yes click, trigger heart fireworks/explosion using particles/physics, add glow/sparkle around final message, and display final message including boyfriend name.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Add extra cute romantic elements on No interactions (e.g., teddy bear/chocolates/hugs floating around) plus romantic ambient background noise.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Implement hidden admin system: open via secret typed keyword, then password prompt (default 2026love); admin panel edits girlfriend/boyfriend names, final message, and admin password; persist via localStorage.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Admin panel generates shareable link encoding settings in base64 as ?data=..., provides Copy Link, and auto-decodes/applies settings on load when data param exists.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Fix No-button evasive behavior: it currently evades only once then stops; ensure it continues evading and reveal Yes only after at least 7 evasions.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Replace the current romantic/ambient background noise with a more soothing romantic instrumental track (and make it less annoying).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Optimize experience for both mobile and PC (performance, responsiveness, and smooth interaction/audio behavior).",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Single-file magical Valentine proposal website with cinematic animated background, interactive No/Yes flow, and hidden admin + share link",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

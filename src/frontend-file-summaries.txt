@@ -1,0 +1,4 @@
+{
+  "frontend/index.html": "Complete single-file magical Valentine proposal website with Disney-fantasy aesthetic, animated background (butterflies, sparkles, petals), interactive No/Yes button flow with robust evasive behavior requiring 7 evasions before revealing Yes button, soothing romantic instrumental background audio with layered oscillators and smooth fade-in, optimized canvas rendering with frame-rate control and device-pixel-ratio capping for smooth mobile/PC performance, heart fireworks celebration, and hidden admin panel with localStorage persistence and shareable base64-encoded links.",
+  "frontend/src/App.tsx": "Minimal React app component that redirects to the standalone Valentine's proposal HTML page with a loading screen during transition."
+}

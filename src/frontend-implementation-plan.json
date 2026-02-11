@@ -1,0 +1,73 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Valentine single-page interaction fixes: No-button evasion, soothing audio, and mobile/PC performance",
+  "requirements": [
+    {
+      "id": "REQ-12",
+      "summary": "Make the “No” button reliably evade on every desktop hover/click and mobile tap/touch throughout the entire flow, without becoming non-interactive and always staying within the viewport.",
+      "acceptanceCriteria": [
+        "On desktop, attempting to hover or click the “No” button triggers an evade every time until the Yes button is revealed.",
+        "On mobile, tapping the “No” button triggers an evade every time until the Yes button is revealed.",
+        "The “No” button never becomes non-interactive after the first evade (no stuck state, no lost event handlers, no pointer-events issues).",
+        "The “No” button’s new position is always fully within the visible viewport (not off-screen or clipped)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Rework the “No” button evasion interaction to use robust, repeatable event wiring across mouse and touch (e.g., pointer-based handlers for hover/enter and press), ensuring handlers are never removed/disabled after the first evade. Update the evasion positioning logic to compute safe random positions constrained by current viewport size and the button’s measured dimensions (including margins), clamping final coordinates so the button is never off-screen or clipped. Ensure the button remains fully interactive (no pointer-events toggling that can get stuck) and that movement updates are applied in a way that keeps responsiveness consistent during repeated evasions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Require at least 7 successful evasions before revealing the “Yes” button, with consistent reveal behavior and a stable evade counter on both mobile and desktop.",
+      "acceptanceCriteria": [
+        "The “Yes” button remains hidden until the 7th evade is completed.",
+        "After 7 evasions, the “Yes” button becomes visible with its existing soft animation and remains usable.",
+        "The evade counter is not reset unexpectedly during normal interaction (e.g., due to resize, pointer transitions, or touch events)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Adjust proposal flow state so the evade counter increments only on successful evasion actions and persists through normal pointer transitions and resize events. Gate the “Yes” button visibility on completing at least 7 evasions, then apply the existing reveal animation class consistently on both mobile and desktop. Ensure counter logic cannot double-increment due to overlapping touch/click synthesis (e.g., pointer events triggering multiple handlers), and avoid resetting evadeCount except when the overall proposal flow explicitly restarts."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Replace the current background audio tone/noise with a soothing romantic instrumental soundscape, with smooth fade-in after “Tap to Start ✨”, comfortable volume on mobile/desktop, and graceful failure handling.",
+      "acceptanceCriteria": [
+        "Background audio starts only after the user taps/clicks “Tap to Start ✨” and fades in smoothly (no sudden loud start).",
+        "The new audio is clearly “romantic instrumental” in character (not harsh/tonal noise like a single constant sine tone).",
+        "Default volume is comfortable on both mobile and desktop (no clipping/distortion, no overly loud gain).",
+        "If audio cannot start (browser restrictions or errors), the page continues to function without breaking interactions/animations."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Replace the current single sine oscillator background audio with a more soothing romantic instrumental-style WebAudio soundscape (e.g., layered soft pad/chords with gentle filtering and subtle movement), keeping overall gain conservative to prevent loudness on mobile speakers. Maintain autoplay compliance by starting audio only inside the existing “Tap to Start ✨” user interaction path, and implement a smooth fade-in using gain ramping. Add resilient error handling so audio initialization/playback failures do not affect the rest of the proposal interactions and animations, and ensure audio resources are cleaned up appropriately if the flow is restarted."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Optimize animation/runtime performance and responsiveness on mobile and PC, focusing on canvas rendering, animation loops, and interaction handling to keep the experience smooth during background effects and repeated evasions.",
+      "acceptanceCriteria": [
+        "The page maintains smooth animation without noticeable stutter during repeated “No” evasions and background animations on typical mobile and desktop devices.",
+        "Canvas rendering adapts to screen size changes without causing major frame drops (e.g., resize handling is efficient).",
+        "Touch interactions do not cause unintended scrolling/zooming that breaks the experience (while keeping the page usable and accessible)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Optimize the canvas animation loop to reduce per-frame overhead (use requestAnimationFrame with a delta-time step, avoid repeated expensive time calls inside many particle updates, and minimize state churn during draw). Improve resize handling by throttling/deferring canvas resizes (and recalculations) to animation frames and accounting for devicePixelRatio to balance sharpness vs performance on mobile. Add mobile-friendly interaction safeguards (e.g., prevent unintended scrolling/zooming during gameplay-like interactions via appropriate touch-action/overscroll behavior on the interactive region) while preserving accessibility. Where needed, tune particle counts/effect intensity based on screen size or device capability to keep frame times stable during repeated “No” evasions and background effects."
+        }
+      ]
+    }
+  ]
+}
