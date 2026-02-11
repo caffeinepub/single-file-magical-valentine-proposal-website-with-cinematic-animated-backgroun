@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T15:28:03.313Z",
+  "generatedAt": "2026-02-11T16:26:51.640Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 4,
+    "total": 2,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-12",
-        "summary": "Fix the “No” button evasion behavior so it reliably evades repeatedly (not just once) on both desktop (mouse hover/click) and mobile (tap/touch), staying responsive for the entire proposal flow.",
+        "id": "REQ-21",
+        "summary": "Fix the “No” button evasion positioning logic in `frontend/index.html` so the No button never moves outside the visible viewport safe area (i.e., it remains fully visible and clickable/tappable at all times), preventing it from disappearing after ~2 evasions.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/index.html"
@@ -22,30 +22,8 @@
         ]
       },
       {
-        "id": "REQ-13",
-        "summary": "Update the proposal flow so the “No” button performs at least 7 successful evasions before revealing the “Yes” button, and ensure the “Yes” button reveal is consistent across mobile and desktop.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/index.html"
-        ],
-        "matchedFiles": [
-          "frontend/index.html"
-        ]
-      },
-      {
-        "id": "REQ-14",
-        "summary": "Replace the current background audio/noise with a soothing romantic instrumental soundscape that is less annoying, with mobile/desktop-friendly volume levels and smooth fade-in after the “Tap to Start” interaction.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/index.html"
-        ],
-        "matchedFiles": [
-          "frontend/index.html"
-        ]
-      },
-      {
-        "id": "REQ-15",
-        "summary": "Optimize overall runtime performance and responsiveness for both mobile and PC, focusing on animation loops, canvas rendering, and interaction handling so the experience stays smooth during background effects and repeated “No” evasions.",
+        "id": "REQ-22",
+        "summary": "Ensure the proposal flow continues correctly after the positioning fix: the No button reliably performs 7 successful evasions and only then reveals the Yes button, with behavior consistent across desktop and mobile.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/index.html"
@@ -58,12 +36,10 @@
   },
   "changedFiles": [
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/index.html",
-    "frontend/src/App.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

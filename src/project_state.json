@@ -1,16 +1,20 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
+  "projectStateVersion": 11,
   "summary": "Single-file (index.html only) magical Disney-fantasy Valentine proposal landing page for Netlify with cinematic animated background (butterflies, fairy particles, petals, glow), tap-to-start intro with music, interactive No/Yes proposal flow with evasive No button and messages, Yes celebration effects, plus a hidden keyword/password admin panel that persists settings via localStorage and supports shareable base64-encoded links.",
   "architectural_notes": [
     "All functionality must be contained in a single index.html (HTML/CSS/JS/assets via inline/base64) with no backend; must run when deployed as static site (e.g., Netlify).",
     "Persist editable configuration in localStorage; optionally override/seed configuration via base64-encoded ?data= query parameter for shareable links.",
-    "Audio must start only after explicit user interaction (Tap to Start) and then fade in to comply with browser autoplay policies."
+    "Audio must start only after explicit user interaction (Tap to Start) and then fade in to comply with browser autoplay policies.",
+    "Background music should be replaced using the user-provided \"forever\" audio file (provided as forever.mp4/MP3); integrate in a single-file friendly way (e.g., inline/base64) and still start only after Tap-to-Start with a smooth fade-in."
   ],
   "known_issues": [
-    "No button evade behavior is bugged: it only evades/pops once and then stops responding.",
     "Background noise/audio is perceived as annoying; needs replacement with a soothing romantic instrumental.",
-    "Site needs better optimization for both mobile and PC usage (performance/responsiveness)."
+    "Site needs better optimization for both mobile and PC usage (performance/responsiveness).",
+    "Custom names/messages are not applying correctly (e.g., Girlfriend: Filizana, Boyfriend: Akash; plus custom No/Yes messages).",
+    "Admin panel shareable base64 link generation is not including the updated settings (encodes stale/default values and/or loaded links don’t reflect recent edits).",
+    "No-button evasion movement should jump farther (e.g., to corners/edges like top corner then left corner, etc.) rather than staying near; current behavior doesn’t match desired far-jump pattern.",
+    "No button can evade outside the browser window/viewport, becoming invisible and impossible to interact with; must constrain movement to stay fully onscreen."
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -133,6 +137,62 @@
         "REQ-15"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fix-the-settings-apply-flow-in-frontend-index-html-so-that-admin-edited-settings-girlfriend-name-boyfriend-name-final-yes-message-admin-password-reliably-apply-to-the-ui-immediately-after-saving-and-persist-across-reloads-via-localstorage-ensure-the-proposal-text-uses-the-saved-girlfriend-name-and-the-final-yes-celebration-message-uses-the-saved-final-yes-message-and-boyfriend-name",
+      "title": "Fix the settings/apply flow in frontend/index.html so that admin-edited settings (Girlfriend Name, Boyfriend Name, Final Yes Message, Admin Password) reliably apply to the UI immediately after saving and persist across reloads via localStorage; ensure the proposal text uses the saved Girlfriend Name and the final YES celebration message uses the saved Final Yes Message and Boyfriend Name.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-admin-panel-shareable-link-generation-in-frontend-index-html-so-the-generated-base64-data-link-always-encodes-the-latest-edited-values-not-stale-default-settings-and-opening-that-link-in-a-new-tab-window-correctly-applies-those-values-on-load-and-persists-them-to-localstorage",
+      "title": "Fix the Admin Panel shareable link generation in frontend/index.html so the generated base64 `?data=...` link always encodes the latest edited values (not stale/default settings), and opening that link in a new tab/window correctly applies those values on load and persists them to localStorage.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-no-button-evasion-behavior-in-frontend-index-html-so-that-each-evade-jumps-substantially-farther-across-the-viewport-favoring-corners-edges-such-as-top-right-top-left-bottom-right-bottom-left-then-other-far-edge-positions-rather-than-staying-near-the-prior-position-while-remaining-fully-within-the-visible-safe-area-on-both-mobile-and-desktop",
+      "title": "Update the No-button evasion behavior in frontend/index.html so that each evade jumps substantially farther across the viewport (favoring corners/edges such as top-right, top-left, bottom-right, bottom-left, then other far edge positions), rather than staying near the prior position, while remaining fully within the visible safe area on both mobile and desktop.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-synthesized-background-music-in-frontend-index-html-with-playback-of-the-user-uploaded-background-song-file-user-indicated-forever-mp4-and-then-an-mp3-version-starting-only-after-the-tap-to-start-interaction-and-fading-in-smoothly-at-a-mobile-desktop-friendly-volume-if-the-uploaded-file-cannot-be-loaded-for-any-reason-fall-back-gracefully-no-crashes-optionally-keep-the-current-synthesized-audio-as-a-backup",
+      "title": "Replace the current synthesized background music in `frontend/index.html` with playback of the user-uploaded background song file (user indicated `forever.mp4` and then an MP3 version), starting only after the “Tap to Start ✨” interaction and fading in smoothly at a mobile/desktop-friendly volume. If the uploaded file cannot be loaded for any reason, fall back gracefully (no crashes; optionally keep the current synthesized audio as a backup).",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-no-button-evasion-positioning-in-frontend-index-html-so-the-no-button-never-moves-outside-the-visible-viewport-safe-area-fully-visible-and-reachable-by-mouse-touch-at-all-times-on-both-desktop-and-mobile-while-keeping-the-existing-requirement-of-7-successful-evasions-before-revealing-the-yes-button",
+      "title": "Fix the No-button evasion positioning in `frontend/index.html` so the No button never moves outside the visible viewport/safe area (fully visible and reachable by mouse/touch at all times) on both desktop and mobile, while keeping the existing requirement of 7 successful evasions before revealing the Yes button.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-no-button-evasion-positioning-logic-in-frontend-index-html-so-the-no-button-never-moves-outside-the-visible-viewport-safe-area-i-e-it-remains-fully-visible-and-clickable-tappable-at-all-times-preventing-it-from-disappearing-after-2-evasions",
+      "title": "Fix the “No” button evasion positioning logic in `frontend/index.html` so the No button never moves outside the visible viewport safe area (i.e., it remains fully visible and clickable/tappable at all times), preventing it from disappearing after ~2 evasions.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-proposal-flow-continues-correctly-after-the-positioning-fix-the-no-button-reliably-performs-7-successful-evasions-and-only-then-reveals-the-yes-button-with-behavior-consistent-across-desktop-and-mobile",
+      "title": "Ensure the proposal flow continues correctly after the positioning fix: the No button reliably performs 7 successful evasions and only then reveals the Yes button, with behavior consistent across desktop and mobile.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -205,6 +265,12 @@
     {
       "id": "AR-12",
       "summary": "Optimize experience for both mobile and PC (performance, responsiveness, and smooth interaction/audio behavior).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Fix No-button positioning so each evade always stays fully within the visible viewport/safe area (never runs outside the window and remains reachable by mouse/touch), while keeping 7 evasions before revealing Yes.",
       "reqIds": [],
       "status": "pending"
     }

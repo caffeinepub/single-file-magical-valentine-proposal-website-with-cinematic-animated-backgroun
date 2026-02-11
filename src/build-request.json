@@ -1,99 +1,66 @@
 {
   "kind": "build_request",
-  "title": "Fix No-button repeated evasion, replace annoying background audio with soothing romantic instrumental, and optimize for mobile/PC",
-  "priority": "normal",
+  "title": "Fix No button evasion so it never disappears and completes all 7 evasions",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-12",
-      "text": "Fix the “No” button evasion behavior so it reliably evades repeatedly (not just once) on both desktop (mouse hover/click) and mobile (tap/touch), staying responsive for the entire proposal flow.",
+      "id": "REQ-21",
+      "text": "Fix the “No” button evasion positioning logic in `frontend/index.html` so the No button never moves outside the visible viewport safe area (i.e., it remains fully visible and clickable/tappable at all times), preventing it from disappearing after ~2 evasions.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1",
-          "msg-user-2"
+          "recent-1"
         ],
         "quotes": [
-          "the no buttons pops only 1 times and no more after that nothing happens",
-          "optimize it for mobile and pc use"
+          "bro idiot just fix the no button which comes only 2 times and afyter that i cant find the no button its ouut of its rendering area"
         ]
       },
       "acceptanceCriteria": [
-        "On desktop, attempting to hover or click the “No” button triggers an evade every time until the Yes button is revealed.",
-        "On mobile, tapping the “No” button triggers an evade every time until the Yes button is revealed.",
-        "The “No” button never becomes non-interactive after the first evade (no stuck state, no lost event handlers, no pointer-events issues).",
-        "The “No” button’s new position is always fully within the visible viewport (not off-screen or clipped)."
+        "On desktop, repeatedly triggering No-button evasion (hover/click) never results in the No button being partially or fully off-screen.",
+        "On mobile, repeatedly triggering No-button evasion (tap/touch) never results in the No button being partially or fully off-screen.",
+        "After each evade, the No button remains reachable (not covered by other UI, not positioned outside the visible area, and still responds to the next interaction)."
       ]
     },
     {
-      "id": "REQ-13",
-      "text": "Update the proposal flow so the “No” button performs at least 7 successful evasions before revealing the “Yes” button, and ensure the “Yes” button reveal is consistent across mobile and desktop.",
+      "id": "REQ-22",
+      "text": "Ensure the proposal flow continues correctly after the positioning fix: the No button reliably performs 7 successful evasions and only then reveals the Yes button, with behavior consistent across desktop and mobile.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "recent-2"
         ],
         "quotes": [
-          "the no button behavior should run like mouse atleast 7 times"
+          "see the no button should evade 7 times but if the no button isnt available then how will the process continue"
         ]
       },
       "acceptanceCriteria": [
-        "The “Yes” button remains hidden until the 7th evade is completed.",
-        "After 7 evasions, the “Yes” button becomes visible with its existing soft animation and remains usable.",
-        "The evade counter is not reset unexpectedly during normal interaction (e.g., due to resize, pointer transitions, or touch events)."
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "text": "Replace the current background audio/noise with a soothing romantic instrumental soundscape that is less annoying, with mobile/desktop-friendly volume levels and smooth fade-in after the “Tap to Start” interaction.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-user-1",
-          "msg-user-3"
-        ],
-        "quotes": [
-          "replace the romantic noise with something romantic but soothing",
-          "yes last question"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Background audio starts only after the user taps/clicks “Tap to Start ✨” and fades in smoothly (no sudden loud start).",
-        "The new audio is clearly “romantic instrumental” in character (not harsh/tonal noise like a single constant sine tone).",
-        "Default volume is comfortable on both mobile and desktop (no clipping/distortion, no overly loud gain).",
-        "If audio cannot start (browser restrictions or errors), the page continues to function without breaking interactions/animations."
-      ]
-    },
-    {
-      "id": "REQ-15",
-      "text": "Optimize overall runtime performance and responsiveness for both mobile and PC, focusing on animation loops, canvas rendering, and interaction handling so the experience stays smooth during background effects and repeated “No” evasions.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-user-2"
-        ],
-        "quotes": [
-          "optimize it for mobile and pc use"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The page maintains smooth animation without noticeable stutter during repeated “No” evasions and background animations on typical mobile and desktop devices.",
-        "Canvas rendering adapts to screen size changes without causing major frame drops (e.g., resize handling is efficient).",
-        "Touch interactions do not cause unintended scrolling/zooming that breaks the experience (while keeping the page usable and accessible)."
+        "The No button successfully evades at least 7 times in a row without becoming unresponsive or disappearing.",
+        "The Yes button does not appear before the 7th successful evade.",
+        "The Yes button appears reliably immediately after the 7th successful evade on both desktop and mobile."
       ]
     }
   ],
   "constraints": [
-    "Keep the site as a single-file static page in frontend/index.html (no backend dependencies).",
-    "All user-facing text added/changed as part of these fixes must be in English.",
-    "Audio must still comply with autoplay policies by starting only after explicit user interaction (the existing “Tap to Start ✨” flow)."
+    "Implement the fix within the existing single-page implementation in `frontend/index.html` (no new backend dependencies).",
+    "Do not edit any frontend files listed as immutable in SYSTEM_CONTEXT.",
+    "Keep all user-facing text in English."
   ],
   "nonGoals": [
-    "Adding new features unrelated to the reported bugs (e.g., new admin capabilities, new celebration modes).",
-    "Introducing a backend canister or persisting data anywhere other than localStorage and the existing base64 share-link mechanism.",
-    "Changing the overall visual theme beyond what is necessary to implement the fixes and optimizations."
+    "Adding new features unrelated to No-button evasion (e.g., new animations, new admin features, new audio tracks).",
+    "Backend (Motoko) changes or persistence/schema changes."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

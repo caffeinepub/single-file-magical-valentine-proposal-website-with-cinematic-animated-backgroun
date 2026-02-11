@@ -1,13 +1,10 @@
 # Specification
 
 ## Summary
-**Goal:** Make the “No” button reliably evade repeatedly across mobile and desktop, ensure the “Yes” button reveals only after at least 7 evasions, replace the current background audio with a soothing romantic instrumental, and improve overall performance/responsiveness.
+**Goal:** Fix the “No” button evasion behavior so it stays fully visible/clickable on-screen and the flow reliably completes 7 evasions before revealing the “Yes” button on both desktop and mobile.
 
 **Planned changes:**
-- Fix “No” button evasion so it triggers every time (hover/click on desktop, tap/touch on mobile) throughout the proposal flow without becoming non-interactive.
-- Ensure each evasion repositions the “No” button fully within the visible viewport (not clipped/off-screen).
-- Update proposal logic so the “Yes” button stays hidden until at least the 7th successful evade, consistently across mobile and desktop.
-- Replace background audio with a soothing romantic instrumental, starting only after “Tap to Start ✨” with a smooth fade-in and comfortable default volume.
-- Optimize animation/rendering and interaction handling for smooth performance on mobile and PC (including efficient resize handling and preventing touch interactions from breaking the experience).
+- Update the No-button evasion positioning logic in `frontend/index.html` to constrain each new position to the visible viewport safe area so the button never renders partially/fully off-screen.
+- Ensure the evasion counter/trigger logic reliably reaches 7 successful evasions and only then reveals the Yes button, consistently across desktop (hover/click) and mobile (tap/touch).
 
-**User-visible outcome:** On both mobile and desktop, the “No” button keeps dodging reliably at least 7 times before the “Yes” button appears, the page remains smooth and responsive, and the background audio is a calmer romantic instrumental that starts gently after the user taps/clicks to begin.
+**User-visible outcome:** The No button can be interacted with repeatedly without disappearing or becoming unreachable, it evades 7 times reliably, and the Yes button appears immediately after the 7th evade on desktop and mobile.
