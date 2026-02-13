@@ -1,60 +1,49 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix No button viewport bounds and restore hidden admin login + updates",
+  "title": "Persistent bottom-right photo frame after Yes + background music on intro interaction",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Clamp evasive “No” button repositioning so it stays fully inside the viewport and evades up to 10 times across resize/mobile.",
+      "summary": "Show a small persistent bottom-right image frame (IMG_20221213_093702.jpg) after “Yes” is clicked, separate from the main card/button area.",
       "acceptanceCriteria": [
-        "After each evasive movement, the “No” button’s bounding box stays fully inside the current viewport (no part renders off-screen).",
-        "The “No” button can be repeatedly clicked/hovered and remains reachable/clickable after the first move and on subsequent moves.",
-        "The “No” button evades the cursor and changes position exactly 10 times (or up to 10 times, stopping after the 10th successful evade attempt), consistent across desktop and mobile viewport sizes.",
-        "Behavior remains stable if the viewport size changes (e.g., rotating a phone or resizing the browser): the button position is clamped/repositioned to stay visible."
+        "Before “Yes” is clicked, no bottom-right image frame is visible.",
+        "Immediately after clicking “Yes”, a small frame appears at the bottom-right containing IMG_20221213_093702.jpg.",
+        "The frame remains visible until the page is reloaded (no timer-based dismissal).",
+        "The image frame is not rendered inside the main card’s button/message container; it is positioned independently (fixed bottom-right).",
+        "On mobile and desktop, the frame stays within the viewport (respects safe-area insets if applicable) and does not block the “Yes” click interaction."
       ],
       "file_operations": [
         {
           "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Update the existing cursor-evade logic for the “No” button to compute candidate positions using the button’s real rendered size (getBoundingClientRect), then clamp left/top so the full bounding box remains within window.innerWidth/innerHeight for every move (including after the first move). Enforce a single move counter that stops repositioning after 10 successful evade moves. Add a resize/orientationchange handler that re-clamps (or re-randomizes + clamps) the current button position to stay visible, preserving clickability on desktop and mobile."
+          "description": "Add a dedicated, initially-hidden DOM container for the bottom-right image frame outside the main card, plus CSS for a fixed bottom-right layout that respects safe-area insets and uses pointer-events settings so it won’t block the “Yes” click. Update the existing “Yes” click handler to reveal the frame and keep it visible for the session."
+        },
+        {
+          "path": "frontend/assets/IMG_20221213_093702.jpg",
+          "operation": "create",
+          "description": "Add the provided image asset to the static site so frontend/index.html can reference it via a stable relative path (no backend dependency)."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Restore the hidden admin interface login (akash / 2026edit) and ensure admin edits update BF/GF names and main message in the visible UI.",
+      "summary": "Play the uploaded “forever” song as background music starting only after the first explicit user interaction (intro/tap-to-start), and keep playing while the page is open.",
       "acceptanceCriteria": [
-        "Entering username `akash` and password `2026edit` successfully unlocks the admin UI.",
-        "After unlocking, updating BF name, GF name, and the main message immediately updates what the recipient sees in the main proposal UI (without requiring a page reload, unless the existing intended behavior is to reload).",
-        "If incorrect credentials are entered, the admin UI remains locked and shows a clear error message in English.",
-        "The admin UI continues to be hidden by default and only appears via the existing hidden trigger/mechanism already present in the page."
+        "Background music does not attempt to autoplay on page load (no browser autoplay violations).",
+        "After the user completes the first explicit interaction that starts the experience (intro/tap-to-start), the “forever” song begins playing as background music.",
+        "If the “forever” audio asset cannot be loaded for any reason, the page continues to function without crashing (graceful failure)."
       ],
       "file_operations": [
         {
           "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Fix the existing hidden admin login flow to accept username `akash` and password `2026edit`, keep the admin panel hidden by default, and preserve the current hidden trigger mechanism. Ensure incorrect credentials keep the UI locked and render a clear English error message. After unlock, wire the admin form controls so saving BF name, GF name, and main message updates the live proposal UI immediately (update the same DOM nodes the recipient sees) and preserves any existing persistence approach already present on the page (e.g., localStorage) if intended by the original implementation."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Align frontend admin checks with password `2026edit` so calls to isAdmin(...) and admin actions succeed once backend uses the updated password.",
-      "acceptanceCriteria": [
-        "Calling `isAdmin(\"2026edit\")` returns `true`.",
-        "Any backend admin-gated functions that rely on the admin password accept `2026edit` and reject other passwords.",
-        "The hidden admin interface can successfully perform its backend admin actions (e.g., retrieving responses) after logging in with `akash` / `2026edit`."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/index.html",
-          "operation": "modify",
-          "description": "Update the admin unlock + admin actions flow to use the entered password (expected `2026edit`) consistently when calling backend admin-gated capabilities (e.g., isAdmin, getAllResponses, getResponse). Ensure the UI only enables admin actions after a successful isAdmin check, and surface an English error message if the backend rejects the password."
+          "description": "Add an <audio> element (or programmatic Audio instance) configured for looping background playback and wire it to the existing intro/tap-to-start interaction so playback begins only after that user gesture. Ensure playback failures (e.g., load/play promise rejection) are caught and do not break the page flow."
         },
         {
-          "path": "frontend/src/valentine/backendClient.ts",
-          "operation": "modify",
-          "description": "Ensure the admin helper wrappers (isAdmin, getAllResponses, and any additional admin wrappers used by the page) correctly pass through the provided admin password string without mutation, so `2026edit` is sent exactly as entered and the hidden admin UI’s backend admin checks can succeed."
+          "path": "frontend/assets/forever.mp3",
+          "operation": "create",
+          "description": "Add the provided “forever” audio asset to the static site so frontend/index.html can load it locally without backend dependencies."
         }
       ]
     }

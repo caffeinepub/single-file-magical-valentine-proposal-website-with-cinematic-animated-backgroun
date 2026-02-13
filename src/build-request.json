@@ -1,93 +1,61 @@
 {
   "kind": "build_request",
-  "title": "Fix runaway “No” button bounds and repair hidden admin login (akash / 2026edit)",
+  "title": "Add persistent bottom-right image frame after Yes + play uploaded “forever” song as background music",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Fix the evasive “No” button behavior in `frontend/index.html` so it always remains fully within the visible browser viewport (including after the first move), stays clickable, and continues to evade the cursor for up to 10 moves as intended.",
+      "text": "After the user clicks the “Yes” button in frontend/index.html, display the uploaded image (IMG_20221213_093702.jpg) in a small persistent frame fixed to the bottom-right corner of the screen. The frame must remain visible for the rest of the session (no auto-dismiss). The image display must be separate from (not inside) the existing buttons/messages area.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4",
-          "msg-7"
+          "msg-1"
         ],
         "quotes": [
-          "again the no button is out of the rendering area its out of the browser area only after 1 time the no button is out of reach so i cant press the no button anymore",
-          "i want the no button to be inside the browser so its clickable ... and it appears 10 times and shift its position like runnung mouse"
+          "at the end can u make this image popup in a small frame when she presses yes",
+          "bottom right corner",
+          "stay on the screen",
+          "separate space"
         ]
       },
       "acceptanceCriteria": [
-        "After each evasive movement, the “No” button’s bounding box stays fully inside the current viewport (no part renders off-screen).",
-        "The “No” button can be repeatedly clicked/hovered and remains reachable/clickable after the first move and on subsequent moves.",
-        "The “No” button evades the cursor and changes position exactly 10 times (or up to 10 times, stopping after the 10th successful evade attempt), consistent across desktop and mobile viewport sizes.",
-        "Behavior remains stable if the viewport size changes (e.g., rotating a phone or resizing the browser): the button position is clamped/repositioned to stay visible."
+        "Before “Yes” is clicked, no bottom-right image frame is visible.",
+        "Immediately after clicking “Yes”, a small frame appears at the bottom-right containing IMG_20221213_093702.jpg.",
+        "The frame remains visible until the page is reloaded (no timer-based dismissal).",
+        "The image frame is not rendered inside the main card’s button/message container; it is positioned independently (fixed bottom-right).",
+        "On mobile and desktop, the frame stays within the viewport (respects safe-area insets if applicable) and does not block the “Yes” click interaction."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Repair the hidden admin interface in `frontend/index.html` so logging in with username `akash` and password `2026edit` works, and the admin can update the BF name, GF name, and the main message as intended.",
+      "text": "Add background music playback in frontend/index.html using the previously uploaded “forever” song file from this chat. Music must start only after explicit user interaction (use the existing tap-to-start / intro interaction) and then play as background music while the page is open.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4",
-          "msg-7"
+          "msg-1"
         ],
         "quotes": [
-          "the admin hidden interface where i can update the bf and gf name and the message as well is not working when i type akash and password 2026edit",
-          "yes ... stay exactly"
+          "and the forever song i uploaded day before yesteraday in this chat should also be there as background music"
         ]
       },
       "acceptanceCriteria": [
-        "Entering username `akash` and password `2026edit` successfully unlocks the admin UI.",
-        "After unlocking, updating BF name, GF name, and the main message immediately updates what the recipient sees in the main proposal UI (without requiring a page reload, unless the existing intended behavior is to reload).",
-        "If incorrect credentials are entered, the admin UI remains locked and shows a clear error message in English.",
-        "The admin UI continues to be hidden by default and only appears via the existing hidden trigger/mechanism already present in the page."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Update backend admin verification in `backend/main.mo` so admin-gated operations use the password `2026edit` (to match the required admin credentials) and ensure frontend admin checks that call `isAdmin(...)` succeed with `2026edit`.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-4",
-          "msg-7"
-        ],
-        "quotes": [
-          "when i type akash and password 2026edit can u fix those",
-          "stay exactly"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Calling `isAdmin(\"2026edit\")` returns `true`.",
-        "Any backend admin-gated functions that rely on the admin password accept `2026edit` and reject other passwords.",
-        "The hidden admin interface can successfully perform its backend admin actions (e.g., retrieving responses) after logging in with `akash` / `2026edit`."
+        "Background music does not attempt to autoplay on page load (no browser autoplay violations).",
+        "After the user completes the first explicit interaction that starts the experience (intro/tap-to-start), the “forever” song begins playing as background music.",
+        "If the “forever” audio asset cannot be loaded for any reason, the page continues to function without crashing (graceful failure)."
       ]
     }
   ],
   "constraints": [
-    "Frontend must not modify files under `frontend/src/components/ui` or any paths listed in `frontend.immutablePaths` (compose them instead if needed).",
-    "Backend must remain a single Motoko actor in `backend/main.mo`.",
-    "Use English for any user-facing text added or changed."
+    "Do not modify files under frontend/src/components/ui or any other paths listed as immutable in SYSTEM_CONTEXT.",
+    "Keep the experience working as a static site (no backend dependency required for image/music playback).",
+    "All user-facing text introduced by these changes must be in English."
   ],
   "nonGoals": [
-    "Adding a new authentication provider or third-party login (only the existing hidden admin credentials are in scope).",
-    "Introducing external databases or additional backend services.",
-    "Redesigning the entire Valentine experience flow beyond fixing the out-of-bounds “No” button and the broken admin login/update capability."
+    "Adding new UI flows, extra buttons (e.g., close image, mute/unmute), or changing the existing Valentine proposal storyline beyond the requested image frame and background music.",
+    "Backend canister changes (Motoko) are out of scope unless strictly required for static asset delivery (not expected)."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

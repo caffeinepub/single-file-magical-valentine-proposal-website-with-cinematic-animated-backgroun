@@ -1,45 +1,43 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Web experience with a playful moving “No” button and a hidden admin interface for updating BF/GF names and message.",
-  "architectural_notes": [
-    "“No” button movement must be constrained to the visible browser/phone viewport and remain clickable; it should reposition up to 10 times.",
-    "Hidden admin interface must authenticate with fixed credentials: username \"akash\" and password \"2026edit\"."
-  ],
-  "known_issues": [
-    "Bug: After the first move, the “No” button can render outside the browser viewport, becoming unreachable/un-clickable.",
-    "Bug: Hidden admin interface login is not working with credentials akash / 2026edit, preventing updates to BF/GF names and message."
-  ],
-  "isFixRequest": true,
+  "summary": "App update planned: after pressing Yes, show an uploaded image in a small persistent bottom-right frame (separate space from buttons/messages), and add previously uploaded 'forever' song as background music.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-fix-the-evasive-no-button-behavior-in-frontend-index-html-so-it-always-remains-fully-within-the-visible-browser-viewport-including-after-the-first-move-stays-clickable-and-continues-to-evade-the-cursor-for-up-to-10-moves-as-intended",
-      "title": "Fix the evasive “No” button behavior in `frontend/index.html` so it always remains fully within the visible browser viewport (including after the first move), stays clickable, and continues to evade the cursor for up to 10 moves as intended.",
+      "id": "feature-after-the-user-clicks-the-yes-button-in-frontend-index-html-display-the-uploaded-image-img-20221213-093702-jpg-in-a-small-persistent-frame-fixed-to-the-bottom-right-corner-of-the-screen-the-frame-must-remain-visible-for-the-rest-of-the-session-no-auto-dismiss-the-image-display-must-be-separate-from-not-inside-the-existing-buttons-messages-area",
+      "title": "After the user clicks the “Yes” button in frontend/index.html, display the uploaded image (IMG_20221213_093702.jpg) in a small persistent frame fixed to the bottom-right corner of the screen. The frame must remain visible for the rest of the session (no auto-dismiss). The image display must be separate from (not inside) the existing buttons/messages area.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-repair-the-hidden-admin-interface-in-frontend-index-html-so-logging-in-with-username-akash-and-password-2026edit-works-and-the-admin-can-update-the-bf-name-gf-name-and-the-main-message-as-intended",
-      "title": "Repair the hidden admin interface in `frontend/index.html` so logging in with username `akash` and password `2026edit` works, and the admin can update the BF name, GF name, and the main message as intended.",
+      "id": "feature-add-background-music-playback-in-frontend-index-html-using-the-previously-uploaded-forever-song-file-from-this-chat-music-must-start-only-after-explicit-user-interaction-use-the-existing-tap-to-start-intro-interaction-and-then-play-as-background-music-while-the-page-is-open",
+      "title": "Add background music playback in frontend/index.html using the previously uploaded “forever” song file from this chat. Music must start only after explicit user interaction (use the existing tap-to-start / intro interaction) and then play as background music while the page is open.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
-    },
-    {
-      "id": "feature-update-backend-admin-verification-in-backend-main-mo-so-admin-gated-operations-use-the-password-2026edit-to-match-the-required-admin-credentials-and-ensure-frontend-admin-checks-that-call-isadmin-succeed-with-2026edit",
-      "title": "Update backend admin verification in `backend/main.mo` so admin-gated operations use the password `2026edit` (to match the required admin credentials) and ensure frontend admin checks that call `isAdmin(...)` succeed with `2026edit`.",
-      "reqIds": [
-        "REQ-3"
-      ],
-      "version": 1
     }
   ],
-  "new_feature_requests": [],
-  "gameProjectType": "none",
-  "projectName": "Fix runaway “No” button bounds and repair hidden admin login (akash / 2026edit)",
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "After user presses Yes, display the uploaded image in a small persistent frame at the bottom-right; image appears in a separate empty space from existing buttons/messages.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Add background music using the previously uploaded 'forever' song to play in the app.",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Add persistent bottom-right image frame after Yes + play uploaded “forever” song as background music",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

@@ -38,26 +38,6 @@
             pointer-events: none;
         }
 
-        /* Corner Picture */
-        #cornerPicture {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid oklch(0.95 0.05 340 / 0.5);
-            box-shadow: 0 4px 20px oklch(0.3 0.1 340 / 0.4);
-            z-index: 5;
-            pointer-events: none;
-            display: none;
-        }
-
-        #cornerPicture.visible {
-            display: block;
-        }
-
         /* Valentine Decorations */
         .cat-decoration {
             position: fixed;
@@ -74,7 +54,8 @@
         }
 
         .cat-right {
-            right: 140px;
+            right: 20px;
+            animation-delay: 1.5s;
         }
 
         @keyframes catBounce {
@@ -130,6 +111,40 @@
         @keyframes teddyHug {
             0%, 100% { transform: scale(1) rotate(-5deg); }
             50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Bottom-right image frame */
+        #photoFrame {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+            height: 200px;
+            background: oklch(0.95 0.02 340 / 0.2);
+            backdrop-filter: blur(15px) saturate(180%);
+            border: 2px solid oklch(0.95 0.05 340 / 0.4);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 8px 32px oklch(0.1 0.1 320 / 0.5),
+                        0 0 60px oklch(0.5 0.2 340 / 0.3);
+            z-index: 500;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        #photoFrame.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        #photoFrame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px oklch(0.1 0.1 320 / 0.4);
         }
 
         #introOverlay {
@@ -259,9 +274,9 @@
             background: linear-gradient(135deg, oklch(0.65 0.15 340), oklch(0.55 0.18 330));
             color: oklch(0.98 0.02 340);
             position: fixed;
-            transition: left 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-                        top 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            will-change: left, top;
+            transition: left 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        top 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            will-change: transform;
             z-index: 100;
         }
 
@@ -286,18 +301,6 @@
         .btn-yes:hover {
             transform: scale(1.1);
             box-shadow: 0 8px 40px oklch(0.6 0.25 340 / 0.6);
-        }
-
-        .boba-input {
-            width: 100%;
-            max-width: 300px;
-            padding: 0.8rem;
-            font-size: 1rem;
-            border: 1px solid oklch(0.7 0.05 340 / 0.3);
-            border-radius: 12px;
-            background: oklch(0.98 0.01 340 / 0.8);
-            color: oklch(0.2 0.1 340);
-            margin-bottom: 1rem;
         }
 
         .final-message {
@@ -341,7 +344,7 @@
             z-index: 2000;
             display: none;
             max-width: 90%;
-            width: 600px;
+            width: 500px;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -417,65 +420,6 @@
             border: 1px solid oklch(0.7 0.05 340 / 0.3);
         }
 
-        .responses-list {
-            margin-top: 2rem;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .response-item {
-            background: oklch(0.98 0.01 340 / 0.8);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid oklch(0.7 0.05 340 / 0.3);
-        }
-
-        .response-item p {
-            margin: 0.5rem 0;
-            color: oklch(0.3 0.12 340);
-            font-size: 0.9rem;
-        }
-
-        .response-item strong {
-            color: oklch(0.2 0.15 340);
-        }
-
-        .empty-state {
-            text-align: center;
-            color: oklch(0.5 0.1 340);
-            padding: 2rem;
-            font-style: italic;
-        }
-
-        .error-message {
-            color: oklch(0.5 0.2 10);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            font-weight: 500;
-        }
-
-        #adminLogin {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: oklch(0.95 0.02 340 / 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid oklch(0.95 0.05 340 / 0.5);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px oklch(0.1 0.1 320 / 0.6);
-            z-index: 2000;
-            display: none;
-            max-width: 90%;
-            width: 400px;
-        }
-
-        #adminLogin.visible {
-            display: block;
-        }
-
         @media (max-width: 600px) {
             .glass-card {
                 padding: 2rem 1.5rem;
@@ -507,24 +451,17 @@
                 height: 30px;
             }
 
-            #cornerPicture {
-                width: 70px;
-                height: 70px;
-                bottom: 10px;
-                right: 10px;
-            }
-
-            .cat-right {
-                right: 90px;
+            #photoFrame {
+                width: 150px;
+                height: 150px;
+                bottom: 15px;
+                right: 15px;
             }
         }
     </style>
 </head>
 <body>
     <canvas id="backgroundCanvas"></canvas>
-    
-    <!-- Corner Picture -->
-    <img id="cornerPicture" src="" alt="Corner decoration" />
     
     <!-- Valentine Decorations -->
     <svg class="cat-decoration cat-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -534,17 +471,24 @@
                 <stop offset="100%" style="stop-color:oklch(0.65 0.18 25);stop-opacity:1" />
             </linearGradient>
         </defs>
+        <!-- Cat body -->
         <ellipse cx="50" cy="60" rx="25" ry="20" fill="url(#catGradient)"/>
+        <!-- Cat head -->
         <circle cx="50" cy="35" r="18" fill="url(#catGradient)"/>
+        <!-- Ears -->
         <path d="M 35 25 L 30 15 L 40 20 Z" fill="url(#catGradient)"/>
         <path d="M 65 25 L 70 15 L 60 20 Z" fill="url(#catGradient)"/>
+        <!-- Eyes -->
         <circle cx="43" cy="33" r="3" fill="oklch(0.2 0.05 340)"/>
         <circle cx="57" cy="33" r="3" fill="oklch(0.2 0.05 340)"/>
+        <!-- Nose -->
         <circle cx="50" cy="40" r="2" fill="oklch(0.6 0.2 10)"/>
+        <!-- Whiskers -->
         <line x1="30" y1="38" x2="20" y2="36" stroke="oklch(0.3 0.1 30)" stroke-width="1"/>
         <line x1="30" y1="42" x2="20" y2="44" stroke="oklch(0.3 0.1 30)" stroke-width="1"/>
         <line x1="70" y1="38" x2="80" y2="36" stroke="oklch(0.3 0.1 30)" stroke-width="1"/>
         <line x1="70" y1="42" x2="80" y2="44" stroke="oklch(0.3 0.1 30)" stroke-width="1"/>
+        <!-- Tail -->
         <path d="M 70 65 Q 85 60 90 70" stroke="url(#catGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
     </svg>
 
@@ -555,20 +499,28 @@
                 <stop offset="100%" style="stop-color:oklch(0.7 0.15 335);stop-opacity:1" />
             </linearGradient>
         </defs>
+        <!-- Cat body -->
         <ellipse cx="50" cy="60" rx="25" ry="20" fill="url(#catGradient2)"/>
+        <!-- Cat head -->
         <circle cx="50" cy="35" r="18" fill="url(#catGradient2)"/>
+        <!-- Ears -->
         <path d="M 35 25 L 30 15 L 40 20 Z" fill="url(#catGradient2)"/>
         <path d="M 65 25 L 70 15 L 60 20 Z" fill="url(#catGradient2)"/>
+        <!-- Eyes -->
         <circle cx="43" cy="33" r="3" fill="oklch(0.2 0.05 340)"/>
         <circle cx="57" cy="33" r="3" fill="oklch(0.2 0.05 340)"/>
+        <!-- Nose -->
         <circle cx="50" cy="40" r="2" fill="oklch(0.6 0.2 10)"/>
+        <!-- Whiskers -->
         <line x1="30" y1="38" x2="20" y2="36" stroke="oklch(0.3 0.1 340)" stroke-width="1"/>
         <line x1="30" y1="42" x2="20" y2="44" stroke="oklch(0.3 0.1 340)" stroke-width="1"/>
         <line x1="70" y1="38" x2="80" y2="36" stroke="oklch(0.3 0.1 340)" stroke-width="1"/>
         <line x1="70" y1="42" x2="80" y2="44" stroke="oklch(0.3 0.1 340)" stroke-width="1"/>
+        <!-- Tail -->
         <path d="M 30 65 Q 15 60 10 70" stroke="url(#catGradient2)" stroke-width="4" fill="none" stroke-linecap="round"/>
     </svg>
 
+    <!-- Chocolates -->
     <svg class="chocolate-decoration chocolate-1" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
         <rect x="5" y="10" width="40" height="30" rx="5" fill="oklch(0.35 0.08 30)"/>
         <rect x="10" y="15" width="15" height="10" fill="oklch(0.45 0.1 35)"/>
@@ -580,174 +532,175 @@
     <svg class="chocolate-decoration chocolate-2" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
         <circle cx="25" cy="25" r="20" fill="oklch(0.4 0.1 25)"/>
         <circle cx="25" cy="25" r="15" fill="oklch(0.5 0.12 30)"/>
-        <path d="M 25 10 L 28 20 L 38 20 L 30 27 L 33 37 L 25 30 L 17 37 L 20 27 L 12 20 L 22 20 Z" fill="oklch(0.95 0.02 340)"/>
+        <path d="M 25 10 L 28 20 L 38 20 L 30 27 L 33 37 L 25 30 L 17 37 L 20 27 L 12 20 L 22 20 Z" fill="oklch(0.7 0.15 40)"/>
     </svg>
 
     <svg class="chocolate-decoration chocolate-3" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="15" width="30" height="20" rx="3" fill="oklch(0.4 0.1 30)"/>
-        <circle cx="20" cy="25" r="5" fill="oklch(0.5 0.12 35)"/>
-        <circle cx="30" cy="25" r="5" fill="oklch(0.5 0.12 35)"/>
+        <path d="M 25 5 L 30 15 L 42 17 L 33 26 L 35 38 L 25 32 L 15 38 L 17 26 L 8 17 L 20 15 Z" fill="oklch(0.38 0.09 28)"/>
+        <circle cx="25" cy="25" r="8" fill="oklch(0.55 0.13 35)"/>
     </svg>
 
-    <svg class="teddy-decoration" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Teddy Bear with Heart -->
+    <svg class="teddy-decoration" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="teddyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:oklch(0.6 0.08 30);stop-opacity:1" />
-                <stop offset="100%" style="stop-color:oklch(0.5 0.1 25);stop-opacity:1" />
+                <stop offset="0%" style="stop-color:oklch(0.65 0.12 35);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:oklch(0.55 0.15 30);stop-opacity:1" />
             </linearGradient>
         </defs>
-        <circle cx="30" cy="30" r="15" fill="url(#teddyGradient)"/>
-        <circle cx="70" cy="30" r="15" fill="url(#teddyGradient)"/>
-        <ellipse cx="50" cy="55" rx="28" ry="32" fill="url(#teddyGradient)"/>
-        <circle cx="50" cy="40" r="22" fill="url(#teddyGradient)"/>
-        <circle cx="43" cy="38" r="3" fill="oklch(0.2 0.05 340)"/>
-        <circle cx="57" cy="38" r="3" fill="oklch(0.2 0.05 340)"/>
-        <ellipse cx="50" cy="48" rx="8" ry="6" fill="oklch(0.4 0.08 25)"/>
-        <path d="M 50 48 Q 50 52 50 54" stroke="oklch(0.3 0.1 30)" stroke-width="2" fill="none"/>
-        <path d="M 50 54 Q 45 56 42 54" stroke="oklch(0.3 0.1 30)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M 50 54 Q 55 56 58 54" stroke="oklch(0.3 0.1 30)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M 35 60 L 30 75 L 40 75 Z" fill="url(#teddyGradient)"/>
-        <path d="M 65 60 L 70 75 L 60 75 Z" fill="url(#teddyGradient)"/>
-        <ellipse cx="50" cy="62" rx="6" ry="4" fill="oklch(0.7 0.2 340)" opacity="0.6"/>
+        <!-- Body -->
+        <ellipse cx="60" cy="75" rx="25" ry="30" fill="url(#teddyGradient)"/>
+        <!-- Head -->
+        <circle cx="60" cy="40" r="22" fill="url(#teddyGradient)"/>
+        <!-- Ears -->
+        <circle cx="45" cy="25" r="10" fill="url(#teddyGradient)"/>
+        <circle cx="75" cy="25" r="10" fill="url(#teddyGradient)"/>
+        <!-- Arms -->
+        <ellipse cx="38" cy="70" rx="8" ry="18" fill="url(#teddyGradient)" transform="rotate(-20 38 70)"/>
+        <ellipse cx="82" cy="70" rx="8" ry="18" fill="url(#teddyGradient)" transform="rotate(20 82 70)"/>
+        <!-- Legs -->
+        <ellipse cx="50" cy="100" rx="10" ry="15" fill="url(#teddyGradient)"/>
+        <ellipse cx="70" cy="100" rx="10" ry="15" fill="url(#teddyGradient)"/>
+        <!-- Face -->
+        <circle cx="52" cy="38" r="3" fill="oklch(0.2 0.05 340)"/>
+        <circle cx="68" cy="38" r="3" fill="oklch(0.2 0.05 340)"/>
+        <circle cx="60" cy="45" r="2.5" fill="oklch(0.3 0.1 30)"/>
+        <!-- Heart -->
+        <path d="M 60 85 L 55 80 Q 50 75 50 70 Q 50 65 55 65 Q 60 65 60 70 Q 60 65 65 65 Q 70 65 70 70 Q 70 75 65 80 Z" fill="oklch(0.65 0.25 10)" opacity="0.9"/>
     </svg>
 
+    <!-- Bottom-right photo frame -->
+    <div id="photoFrame">
+        <img src="/assets/IMG_20221213_093702.jpg" alt="Special Memory" />
+    </div>
+
     <div id="introOverlay">
-        <div class="intro-text">Click to Start 💖</div>
+        <div class="intro-text">Tap to Start ✨</div>
     </div>
 
     <div id="mainContent">
-        <div class="glass-card">
-            <div class="proposal-text" id="proposalText">Will you marry me?</div>
+        <div class="glass-card" id="mainCard">
+            <div class="proposal-text" id="proposalText"></div>
             <div class="message-text" id="messageText"></div>
-            <div class="button-container">
-                <button class="btn btn-no" id="noBtn">No</button>
-                <button class="btn btn-yes" id="yesBtn">Yes! 💕</button>
+            <div class="button-container" id="buttonContainer">
+                <button class="btn btn-no" id="noButton">No</button>
+                <button class="btn btn-yes" id="yesButton">Yes</button>
             </div>
         </div>
     </div>
 
-    <!-- Admin Login Modal -->
-    <div id="adminLogin">
-        <h2 class="admin-title">Admin Login</h2>
-        <div class="admin-field">
-            <label class="admin-label" for="adminUsername">Username</label>
-            <input type="text" id="adminUsername" class="admin-input" placeholder="Enter username">
-        </div>
-        <div class="admin-field">
-            <label class="admin-label" for="adminPassword">Password</label>
-            <input type="password" id="adminPassword" class="admin-input" placeholder="Enter password">
-        </div>
-        <div id="loginError" class="error-message" style="display: none;"></div>
-        <button class="admin-button admin-button-primary" id="loginBtn">Login</button>
-        <button class="admin-button admin-button-secondary" id="cancelLoginBtn">Cancel</button>
-    </div>
-
-    <!-- Admin Panel -->
     <div id="adminPanel">
-        <h2 class="admin-title">Admin Panel</h2>
-        
+        <div class="admin-title">Admin Panel</div>
         <div class="admin-field">
-            <label class="admin-label" for="bfName">Boyfriend Name</label>
-            <input type="text" id="bfName" class="admin-input" placeholder="Enter boyfriend name">
+            <label class="admin-label">Girlfriend Name</label>
+            <input type="text" class="admin-input" id="adminGirlfriendName" />
         </div>
-        
         <div class="admin-field">
-            <label class="admin-label" for="gfName">Girlfriend Name</label>
-            <input type="text" id="gfName" class="admin-input" placeholder="Enter girlfriend name">
+            <label class="admin-label">Boyfriend Name</label>
+            <input type="text" class="admin-input" id="adminBoyfriendName" />
         </div>
-        
         <div class="admin-field">
-            <label class="admin-label" for="mainMessage">Main Message</label>
-            <input type="text" id="mainMessage" class="admin-input" placeholder="Enter main message">
+            <label class="admin-label">Final Yes Message</label>
+            <input type="text" class="admin-input" id="adminFinalMessage" />
         </div>
-        
         <div class="admin-field">
-            <label class="admin-label" for="cornerImageUrl">Corner Image URL</label>
-            <input type="text" id="cornerImageUrl" class="admin-input" placeholder="Enter image URL">
+            <label class="admin-label">Admin Password</label>
+            <input type="password" class="admin-input" id="adminPassword" />
         </div>
-        
-        <button class="admin-button admin-button-primary" id="saveBtn">Save Changes</button>
-        <button class="admin-button admin-button-primary" id="generateLinkBtn">Generate Share Link</button>
-        <button class="admin-button admin-button-secondary" id="closeAdminBtn">Close</button>
-        
-        <div id="shareLinkContainer" style="display: none;">
-            <div class="share-link" id="shareLink"></div>
-        </div>
-        
-        <div class="responses-list">
-            <h3 class="admin-label">Responses</h3>
-            <div id="responsesList"></div>
-        </div>
+        <button class="admin-button admin-button-primary" id="saveSettings">Save Settings</button>
+        <button class="admin-button admin-button-secondary" id="generateLink">Generate Link</button>
+        <button class="admin-button admin-button-secondary" id="closeAdmin">Close</button>
+        <div id="shareLinkContainer"></div>
     </div>
 
-    <script type="module">
-        import { recordResponse, isAdmin, getAllResponses } from './src/valentine/backendClient.ts';
-
-        // State
-        let noButtonMoveCount = 0;
-        const MAX_NO_MOVES = 10;
-        let currentAdminPassword = '';
+    <script>
+        // Configuration
+        const ADMIN_PASSWORD = 'valentine2024';
+        const MAX_NO_ATTEMPTS = 5;
         
-        const apologyMessages = [
-            "Please? 🥺",
-            "Are you sure? 💔",
-            "Think about it... 💭",
-            "I'll be sad... 😢",
-            "Pretty please? 🙏",
-            "One more chance? 💝",
-            "Don't break my heart... 💔",
-            "I promise to be good! 😇",
-            "You're making me cry... 😭",
-            "Last chance! 💖"
-        ];
+        let noAttempts = 0;
+        let isYesClicked = false;
+        let backgroundMusic = null;
+
+        // Default settings
+        let settings = {
+            girlfriendName: 'Beautiful',
+            boyfriendName: 'Your Valentine',
+            finalMessage: '💖 I knew you would say yes! 💖\nYou just made me the happiest person alive!'
+        };
+
+        // Parse URL parameters
+        function parseURLParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data');
+            
+            if (dataParam) {
+                try {
+                    const decoded = atob(dataParam);
+                    const parsed = JSON.parse(decoded);
+                    settings = { ...settings, ...parsed };
+                } catch (e) {
+                    console.error('Failed to parse URL parameters');
+                }
+            }
+        }
+
+        parseURLParams();
 
         // Elements
         const introOverlay = document.getElementById('introOverlay');
         const mainContent = document.getElementById('mainContent');
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
         const proposalText = document.getElementById('proposalText');
         const messageText = document.getElementById('messageText');
-        const cornerPicture = document.getElementById('cornerPicture');
+        const noButton = document.getElementById('noButton');
+        const yesButton = document.getElementById('yesButton');
+        const buttonContainer = document.getElementById('buttonContainer');
         const adminPanel = document.getElementById('adminPanel');
-        const adminLogin = document.getElementById('adminLogin');
+        const photoFrame = document.getElementById('photoFrame');
 
-        // Admin elements
-        const bfNameInput = document.getElementById('bfName');
-        const gfNameInput = document.getElementById('gfName');
-        const mainMessageInput = document.getElementById('mainMessage');
-        const cornerImageUrlInput = document.getElementById('cornerImageUrl');
-        const saveBtn = document.getElementById('saveBtn');
-        const generateLinkBtn = document.getElementById('generateLinkBtn');
-        const closeAdminBtn = document.getElementById('closeAdminBtn');
-        const shareLinkContainer = document.getElementById('shareLinkContainer');
-        const shareLink = document.getElementById('shareLink');
-        const responsesList = document.getElementById('responsesList');
+        // Initialize background music
+        function initBackgroundMusic() {
+            try {
+                backgroundMusic = new Audio('/assets/forever.mp3');
+                backgroundMusic.loop = true;
+                backgroundMusic.volume = 0.3;
+            } catch (e) {
+                console.error('Failed to load background music:', e);
+            }
+        }
 
-        // Admin login elements
-        const adminUsername = document.getElementById('adminUsername');
-        const adminPassword = document.getElementById('adminPassword');
-        const loginBtn = document.getElementById('loginBtn');
-        const cancelLoginBtn = document.getElementById('cancelLoginBtn');
-        const loginError = document.getElementById('loginError');
+        // Start background music
+        function startBackgroundMusic() {
+            if (backgroundMusic) {
+                backgroundMusic.play().catch(err => {
+                    console.error('Failed to play background music:', err);
+                });
+            }
+        }
 
-        // Audio
-        let audio;
+        // Intro overlay click
+        introOverlay.addEventListener('click', () => {
+            introOverlay.classList.add('hidden');
+            mainContent.classList.add('visible');
+            initBackgroundMusic();
+            startBackgroundMusic();
+            startExperience();
+        });
 
-        // Canvas animation
+        // Background canvas animation
         const canvas = document.getElementById('backgroundCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const hearts = [];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 30; i++) {
             hearts.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 size: Math.random() * 20 + 10,
-                speed: Math.random() * 2 + 1,
-                opacity: Math.random() * 0.5 + 0.3
+                speed: Math.random() * 0.5 + 0.2,
+                opacity: Math.random() * 0.3 + 0.1
             });
         }
 
@@ -761,210 +714,174 @@
             ctx.fill();
         }
 
-        function animate() {
+        function animateHearts() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             hearts.forEach(heart => {
                 ctx.fillStyle = `rgba(255, 182, 193, ${heart.opacity})`;
                 drawHeart(heart.x, heart.y, heart.size);
                 
-                heart.y += heart.speed;
-                if (heart.y > canvas.height + heart.size) {
-                    heart.y = -heart.size;
+                heart.y -= heart.speed;
+                if (heart.y < -heart.size) {
+                    heart.y = canvas.height + heart.size;
                     heart.x = Math.random() * canvas.width;
                 }
             });
             
-            requestAnimationFrame(animate);
+            requestAnimationFrame(animateHearts);
         }
 
-        animate();
+        animateHearts();
 
-        // Clamp position within viewport bounds
-        function clampPositionToViewport(button) {
-            const rect = button.getBoundingClientRect();
-            const buttonWidth = rect.width;
-            const buttonHeight = rect.height;
-            
-            // Get current position
-            let left = parseFloat(button.style.left) || rect.left;
-            let top = parseFloat(button.style.top) || rect.top;
-            
-            // Clamp to viewport bounds
-            const maxLeft = window.innerWidth - buttonWidth;
-            const maxTop = window.innerHeight - buttonHeight;
-            
-            left = Math.max(0, Math.min(left, maxLeft));
-            top = Math.max(0, Math.min(top, maxTop));
-            
-            return { left, top };
-        }
-
-        // Move No button to random position within viewport
-        function moveNoButton() {
-            if (noButtonMoveCount >= MAX_NO_MOVES) {
-                return;
-            }
-
-            const rect = noBtn.getBoundingClientRect();
-            const buttonWidth = rect.width;
-            const buttonHeight = rect.height;
-            
-            // Calculate safe bounds
-            const maxLeft = window.innerWidth - buttonWidth;
-            const maxTop = window.innerHeight - buttonHeight;
-            
-            // Generate random position within safe bounds
-            const newLeft = Math.random() * maxLeft;
-            const newTop = Math.random() * maxTop;
-            
-            noBtn.style.left = `${newLeft}px`;
-            noBtn.style.top = `${newTop}px`;
-            
-            noButtonMoveCount++;
-            
-            if (noButtonMoveCount < apologyMessages.length) {
-                messageText.textContent = apologyMessages[noButtonMoveCount];
-            }
-            
-            if (noButtonMoveCount >= MAX_NO_MOVES) {
-                yesBtn.classList.add('visible');
-            }
-        }
-
-        // Handle viewport resize/orientation change
-        function handleResize() {
-            const clamped = clampPositionToViewport(noBtn);
-            noBtn.style.left = `${clamped.left}px`;
-            noBtn.style.top = `${clamped.top}px`;
-            
+        window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('orientationchange', handleResize);
-
-        // Initialize No button position
-        function initializeNoButton() {
-            const rect = noBtn.getBoundingClientRect();
-            noBtn.style.left = `${rect.left}px`;
-            noBtn.style.top = `${rect.top}px`;
-        }
-
-        // Intro overlay click
-        introOverlay.addEventListener('click', () => {
-            introOverlay.classList.add('hidden');
-            mainContent.classList.add('visible');
-            
-            // Play audio
-            audio = new Audio('/assets/forever.mp3');
-            audio.loop = true;
-            audio.play().catch(e => console.log('Audio autoplay prevented'));
-            
-            // Initialize No button position
-            setTimeout(initializeNoButton, 100);
         });
 
-        // No button hover/touch
-        noBtn.addEventListener('mouseenter', moveNoButton);
-        noBtn.addEventListener('touchstart', (e) => {
+        // Start experience
+        function startExperience() {
+            proposalText.textContent = `${settings.girlfriendName}, will you be my Valentine? 💕`;
+            messageText.textContent = 'Choose wisely... 😊';
+            positionNoButton();
+        }
+
+        // Position No button initially
+        function positionNoButton() {
+            const card = document.getElementById('mainCard');
+            const cardRect = card.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+            
+            const centerX = cardRect.left + (cardRect.width / 2) - (buttonRect.width / 2) - 100;
+            const centerY = cardRect.top + cardRect.height - buttonRect.height - 40;
+            
+            noButton.style.left = `${centerX}px`;
+            noButton.style.top = `${centerY}px`;
+        }
+
+        // Get safe random position for No button
+        function getSafeRandomPosition() {
+            const card = document.getElementById('mainCard');
+            const cardRect = card.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+            
+            const padding = 20;
+            const minX = cardRect.left + padding;
+            const maxX = cardRect.right - buttonRect.width - padding;
+            const minY = cardRect.top + padding;
+            const maxY = cardRect.bottom - buttonRect.height - padding;
+            
+            const viewportMinX = padding;
+            const viewportMaxX = window.innerWidth - buttonRect.width - padding;
+            const viewportMinY = padding;
+            const viewportMaxY = window.innerHeight - buttonRect.height - padding;
+            
+            const finalMinX = Math.max(minX, viewportMinX);
+            const finalMaxX = Math.min(maxX, viewportMaxX);
+            const finalMinY = Math.max(minY, viewportMinY);
+            const finalMaxY = Math.min(maxY, viewportMaxY);
+            
+            const newX = Math.random() * (finalMaxX - finalMinX) + finalMinX;
+            const newY = Math.random() * (finalMaxY - finalMinY) + finalMinY;
+            
+            return { x: newX, y: newY };
+        }
+
+        // Handle No button interaction
+        function handleNoButtonInteraction(e) {
             e.preventDefault();
-            moveNoButton();
-        });
-
-        // Yes button click
-        yesBtn.addEventListener('click', async () => {
-            proposalText.textContent = "💖 Yay! You said yes! 💖";
-            messageText.textContent = "Now, one more question...";
-            noBtn.style.display = 'none';
-            yesBtn.style.display = 'none';
+            e.stopPropagation();
             
-            setTimeout(() => {
-                proposalText.textContent = "What's your favorite boba tea flavor?";
-                messageText.innerHTML = '<input type="text" class="boba-input" id="bobaInput" placeholder="Type your answer...">';
-                
-                const bobaInput = document.getElementById('bobaInput');
-                const submitBobaBtn = document.createElement('button');
-                submitBobaBtn.className = 'btn btn-yes visible';
-                submitBobaBtn.textContent = 'Submit';
-                submitBobaBtn.style.display = 'inline-block';
-                
-                document.querySelector('.button-container').appendChild(submitBobaBtn);
-                
-                submitBobaBtn.addEventListener('click', async () => {
-                    const bobaAnswer = bobaInput.value.trim();
-                    if (bobaAnswer) {
-                        try {
-                            await recordResponse('Yes', bobaAnswer);
-                        } catch (error) {
-                            console.error('Error recording response:', error);
-                        }
-                        
-                        proposalText.innerHTML = '<div class="final-message">Perfect! 💕<br>See you soon! 🥰</div>';
-                        messageText.textContent = '';
-                        submitBobaBtn.style.display = 'none';
-                        
-                        createFloatingDecorations();
-                    }
-                });
-            }, 2000);
+            if (isYesClicked) return;
+            
+            noAttempts++;
+            
+            const messages = [
+                'Are you sure? 🥺',
+                'Really? Think again... 💭',
+                'Come on, give it a chance! 💝',
+                'Pretty please? 🙏',
+                'Last chance to reconsider! ✨'
+            ];
+            
+            if (noAttempts < MAX_NO_ATTEMPTS) {
+                messageText.textContent = messages[noAttempts - 1];
+                const pos = getSafeRandomPosition();
+                noButton.style.left = `${pos.x}px`;
+                noButton.style.top = `${pos.y}px`;
+            } else {
+                noButton.style.display = 'none';
+                yesButton.classList.add('visible');
+                messageText.textContent = 'Okay, I guess there\'s only one option left... 😊';
+            }
+            
+            createFloatingHeart(e.clientX || (e.touches && e.touches[0].clientX), 
+                               e.clientY || (e.touches && e.touches[0].clientY));
+        }
+
+        noButton.addEventListener('mouseenter', handleNoButtonInteraction);
+        noButton.addEventListener('touchstart', handleNoButtonInteraction);
+        noButton.addEventListener('click', handleNoButtonInteraction);
+
+        // Handle Yes button click
+        yesButton.addEventListener('click', () => {
+            if (isYesClicked) return;
+            isYesClicked = true;
+            
+            noButton.style.display = 'none';
+            yesButton.style.display = 'none';
+            
+            proposalText.innerHTML = settings.finalMessage.replace(/\n/g, '<br>');
+            proposalText.classList.add('final-message');
+            messageText.textContent = '';
+            
+            // Show photo frame
+            photoFrame.classList.add('visible');
+            
+            createCelebration();
         });
 
-        function createFloatingDecorations() {
-            const emojis = ['💖', '💕', '💗', '💝', '💘', '🥰', '😍', '💑'];
-            for (let i = 0; i < 20; i++) {
+        // Create floating heart
+        function createFloatingHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-decoration';
+            heart.textContent = '💖';
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        }
+
+        // Create celebration
+        function createCelebration() {
+            const emojis = ['💖', '💕', '💗', '💓', '💝', '🌹', '✨', '🎉'];
+            
+            for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
-                    const decoration = document.createElement('div');
-                    decoration.className = 'floating-decoration';
-                    decoration.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    decoration.style.left = Math.random() * window.innerWidth + 'px';
-                    decoration.style.top = window.innerHeight + 'px';
-                    document.body.appendChild(decoration);
+                    const emoji = document.createElement('div');
+                    emoji.className = 'floating-decoration';
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.left = `${Math.random() * window.innerWidth}px`;
+                    emoji.style.top = `${window.innerHeight}px`;
+                    emoji.style.fontSize = `${Math.random() * 2 + 2}rem`;
+                    document.body.appendChild(emoji);
                     
-                    setTimeout(() => decoration.remove(), 3000);
-                }, i * 200);
+                    setTimeout(() => emoji.remove(), 3000);
+                }, i * 100);
             }
         }
 
-        // Load data from URL
-        function loadDataFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const data = urlParams.get('data');
-            
-            if (data) {
-                try {
-                    const decoded = JSON.parse(atob(data));
-                    if (decoded.bf) bfNameInput.value = decoded.bf;
-                    if (decoded.gf) gfNameInput.value = decoded.gf;
-                    if (decoded.message) {
-                        mainMessageInput.value = decoded.message;
-                        proposalText.textContent = decoded.message;
-                    }
-                    if (decoded.image) {
-                        cornerImageUrlInput.value = decoded.image;
-                        cornerPicture.src = decoded.image;
-                        cornerPicture.classList.add('visible');
-                    }
-                } catch (e) {
-                    console.error('Error parsing URL data:', e);
-                }
-            }
-        }
-
-        // Admin login
+        // Admin panel
         let adminClickCount = 0;
         let adminClickTimer = null;
 
-        cornerPicture.addEventListener('click', () => {
+        proposalText.addEventListener('click', () => {
             adminClickCount++;
             
-            if (adminClickTimer) {
-                clearTimeout(adminClickTimer);
-            }
+            if (adminClickTimer) clearTimeout(adminClickTimer);
             
             if (adminClickCount >= 5) {
-                adminLogin.classList.add('visible');
+                adminPanel.classList.add('visible');
                 adminClickCount = 0;
             }
             
@@ -973,131 +890,50 @@
             }, 2000);
         });
 
-        loginBtn.addEventListener('click', async () => {
-            const username = adminUsername.value.trim();
-            const password = adminPassword.value.trim();
+        document.getElementById('closeAdmin').addEventListener('click', () => {
+            adminPanel.classList.remove('visible');
+        });
+
+        document.getElementById('saveSettings').addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
             
-            loginError.style.display = 'none';
-            
-            if (username !== 'akash') {
-                loginError.textContent = 'Invalid username. Please try again.';
-                loginError.style.display = 'block';
+            if (password !== ADMIN_PASSWORD) {
+                alert('Incorrect password!');
                 return;
             }
             
-            try {
-                const isValidAdmin = await isAdmin(password);
-                
-                if (isValidAdmin) {
-                    currentAdminPassword = password;
-                    adminLogin.classList.remove('visible');
-                    adminPanel.classList.add('visible');
-                    loadResponses();
-                    
-                    // Clear login form
-                    adminUsername.value = '';
-                    adminPassword.value = '';
-                } else {
-                    loginError.textContent = 'Invalid password. Please try again.';
-                    loginError.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                loginError.textContent = 'Login failed. Please try again.';
-                loginError.style.display = 'block';
-            }
-        });
-
-        cancelLoginBtn.addEventListener('click', () => {
-            adminLogin.classList.remove('visible');
-            adminUsername.value = '';
-            adminPassword.value = '';
-            loginError.style.display = 'none';
-        });
-
-        // Allow Enter key to submit login
-        adminPassword.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                loginBtn.click();
-            }
-        });
-
-        saveBtn.addEventListener('click', () => {
-            const bf = bfNameInput.value.trim();
-            const gf = gfNameInput.value.trim();
-            const message = mainMessageInput.value.trim();
-            const imageUrl = cornerImageUrlInput.value.trim();
+            settings.girlfriendName = document.getElementById('adminGirlfriendName').value || settings.girlfriendName;
+            settings.boyfriendName = document.getElementById('adminBoyfriendName').value || settings.boyfriendName;
+            settings.finalMessage = document.getElementById('adminFinalMessage').value || settings.finalMessage;
             
-            if (message) {
-                proposalText.textContent = message;
-            }
-            
-            if (imageUrl) {
-                cornerPicture.src = imageUrl;
-                cornerPicture.classList.add('visible');
-            }
-            
-            alert('Changes saved successfully!');
+            alert('Settings saved! Reload the page to see changes.');
         });
 
-        generateLinkBtn.addEventListener('click', () => {
-            const bf = bfNameInput.value.trim();
-            const gf = gfNameInput.value.trim();
-            const message = mainMessageInput.value.trim();
-            const imageUrl = cornerImageUrlInput.value.trim();
+        document.getElementById('generateLink').addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password !== ADMIN_PASSWORD) {
+                alert('Incorrect password!');
+                return;
+            }
             
             const data = {
-                bf: bf || 'Boyfriend',
-                gf: gf || 'Girlfriend',
-                message: message || 'Will you marry me?',
-                image: imageUrl || ''
+                girlfriendName: document.getElementById('adminGirlfriendName').value || settings.girlfriendName,
+                boyfriendName: document.getElementById('adminBoyfriendName').value || settings.boyfriendName,
+                finalMessage: document.getElementById('adminFinalMessage').value || settings.finalMessage
             };
             
             const encoded = btoa(JSON.stringify(data));
             const url = `${window.location.origin}${window.location.pathname}?data=${encoded}`;
             
-            shareLink.textContent = url;
-            shareLinkContainer.style.display = 'block';
-            
-            // Copy to clipboard
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Link copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-            });
+            const container = document.getElementById('shareLinkContainer');
+            container.innerHTML = `<div class="share-link">${url}</div>`;
         });
 
-        closeAdminBtn.addEventListener('click', () => {
-            adminPanel.classList.remove('visible');
-            currentAdminPassword = '';
-        });
-
-        async function loadResponses() {
-            if (!currentAdminPassword) return;
-            
-            try {
-                const responses = await getAllResponses(currentAdminPassword);
-                
-                if (!responses || responses.length === 0) {
-                    responsesList.innerHTML = '<div class="empty-state">No responses yet</div>';
-                    return;
-                }
-                
-                responsesList.innerHTML = responses.map((response, index) => `
-                    <div class="response-item">
-                        <p><strong>Response ${index + 1}</strong></p>
-                        <p><strong>Wedding:</strong> ${response.weddingAnswer}</p>
-                        <p><strong>Boba:</strong> ${response.bobaAnswer}</p>
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error('Error loading responses:', error);
-                responsesList.innerHTML = '<div class="empty-state">Error loading responses</div>';
-            }
-        }
-
-        // Initialize
-        loadDataFromURL();
+        // Initialize admin fields
+        document.getElementById('adminGirlfriendName').value = settings.girlfriendName;
+        document.getElementById('adminBoyfriendName').value = settings.boyfriendName;
+        document.getElementById('adminFinalMessage').value = settings.finalMessage;
     </script>
 </body>
 </html>

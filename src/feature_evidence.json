@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-evasive-no-button-behavior-in-frontend-index-html-so-it-always-remains-fully-within-the-visible-browser-viewport-including-after-the-first-move-stays-clickable-and-continues-to-evade-the-cursor-for-up-to-10-moves-as-intended",
-      "featureTitle": "Fix the evasive “No” button behavior in `frontend/index.html` so it always remains fully within the visible browser viewport (including after the first move), stays clickable, and continues to evade the cursor for up to 10 moves as intended.",
+      "featureId": "feature-after-the-user-clicks-the-yes-button-in-frontend-index-html-display-the-uploaded-image-img-20221213-093702-jpg-in-a-small-persistent-frame-fixed-to-the-bottom-right-corner-of-the-screen-the-frame-must-remain-visible-for-the-rest-of-the-session-no-auto-dismiss-the-image-display-must-be-separate-from-not-inside-the-existing-buttons-messages-area",
+      "featureTitle": "After the user clicks the “Yes” button in frontend/index.html, display the uploaded image (IMG_20221213_093702.jpg) in a small persistent frame fixed to the bottom-right corner of the screen. The frame must remain visible for the rest of the session (no auto-dismiss). The image display must be separate from (not inside) the existing buttons/messages area.",
       "files": [
         "frontend/index.html"
       ],
@@ -20,8 +20,8 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-repair-the-hidden-admin-interface-in-frontend-index-html-so-logging-in-with-username-akash-and-password-2026edit-works-and-the-admin-can-update-the-bf-name-gf-name-and-the-main-message-as-intended",
-      "featureTitle": "Repair the hidden admin interface in `frontend/index.html` so logging in with username `akash` and password `2026edit` works, and the admin can update the BF name, GF name, and the main message as intended.",
+      "featureId": "feature-add-background-music-playback-in-frontend-index-html-using-the-previously-uploaded-forever-song-file-from-this-chat-music-must-start-only-after-explicit-user-interaction-use-the-existing-tap-to-start-intro-interaction-and-then-play-as-background-music-while-the-page-is-open",
+      "featureTitle": "Add background music playback in frontend/index.html using the previously uploaded “forever” song file from this chat. Music must start only after explicit user interaction (use the existing tap-to-start / intro interaction) and then play as background music while the page is open.",
       "files": [
         "frontend/index.html"
       ],
@@ -34,24 +34,6 @@
       ],
       "testIds": [
         "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-backend-admin-verification-in-backend-main-mo-so-admin-gated-operations-use-the-password-2026edit-to-match-the-required-admin-credentials-and-ensure-frontend-admin-checks-that-call-isadmin-succeed-with-2026edit",
-      "featureTitle": "Update backend admin verification in `backend/main.mo` so admin-gated operations use the password `2026edit` (to match the required admin credentials) and ensure frontend admin checks that call `isAdmin(...)` succeed with `2026edit`.",
-      "files": [
-        "frontend/index.html"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
       ],
       "confidence": "high"
     }

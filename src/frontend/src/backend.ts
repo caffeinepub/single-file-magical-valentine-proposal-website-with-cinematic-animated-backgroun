@@ -89,82 +89,10 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface Response {
-    weddingAnswer: string;
-    bobaAnswer: string;
-    timestamp: bigint;
-}
 export interface backendInterface {
-    getAllResponses(adminPassword: string): Promise<Array<Response> | null>;
-    getResponse(id: bigint, adminPassword: string): Promise<Response | null>;
-    isAdmin(password: string): Promise<boolean>;
-    recordResponse(weddingAnswer: string, bobaAnswer: string): Promise<bigint>;
 }
-import type { Response as _Response } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
-    async getAllResponses(arg0: string): Promise<Array<Response> | null> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getAllResponses(arg0);
-                return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getAllResponses(arg0);
-            return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async getResponse(arg0: bigint, arg1: string): Promise<Response | null> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.getResponse(arg0, arg1);
-                return from_candid_opt_n2(this._uploadFile, this._downloadFile, result);
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.getResponse(arg0, arg1);
-            return from_candid_opt_n2(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async isAdmin(arg0: string): Promise<boolean> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.isAdmin(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.isAdmin(arg0);
-            return result;
-        }
-    }
-    async recordResponse(arg0: string, arg1: string): Promise<bigint> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.recordResponse(arg0, arg1);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.recordResponse(arg0, arg1);
-            return result;
-        }
-    }
-}
-function from_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [Array<_Response>]): Array<Response> | null {
-    return value.length === 0 ? null : value[0];
-}
-function from_candid_opt_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Response]): Response | null {
-    return value.length === 0 ? null : value[0];
 }
 export interface CreateActorOptions {
     agent?: Agent;

@@ -8,34 +8,10 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const Response = IDL.Record({
-  'weddingAnswer' : IDL.Text,
-  'bobaAnswer' : IDL.Text,
-  'timestamp' : IDL.Int,
-});
-
-export const idlService = IDL.Service({
-  'getAllResponses' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Vec(Response))], []),
-  'getResponse' : IDL.Func([IDL.Nat, IDL.Text], [IDL.Opt(Response)], []),
-  'isAdmin' : IDL.Func([IDL.Text], [IDL.Bool], []),
-  'recordResponse' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
-});
+export const idlService = IDL.Service({});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => {
-  const Response = IDL.Record({
-    'weddingAnswer' : IDL.Text,
-    'bobaAnswer' : IDL.Text,
-    'timestamp' : IDL.Int,
-  });
-  
-  return IDL.Service({
-    'getAllResponses' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Vec(Response))], []),
-    'getResponse' : IDL.Func([IDL.Nat, IDL.Text], [IDL.Opt(Response)], []),
-    'isAdmin' : IDL.Func([IDL.Text], [IDL.Bool], []),
-    'recordResponse' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
-  });
-};
+export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
 
 export const init = ({ IDL }) => { return []; };
