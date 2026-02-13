@@ -1,53 +1,80 @@
 {
   "kind": "build_request",
-  "title": "Fix No button evasion so it never disappears and completes all 7 evasions",
-  "priority": "high",
+  "title": "Fix runaway “No” button bounds and repair hidden admin login (akash / 2026edit)",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-21",
-      "text": "Fix the “No” button evasion positioning logic in `frontend/index.html` so the No button never moves outside the visible viewport safe area (i.e., it remains fully visible and clickable/tappable at all times), preventing it from disappearing after ~2 evasions.",
+      "id": "REQ-1",
+      "text": "Fix the evasive “No” button behavior in `frontend/index.html` so it always remains fully within the visible browser viewport (including after the first move), stays clickable, and continues to evade the cursor for up to 10 moves as intended.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-1"
+          "msg-4",
+          "msg-7"
         ],
         "quotes": [
-          "bro idiot just fix the no button which comes only 2 times and afyter that i cant find the no button its ouut of its rendering area"
+          "again the no button is out of the rendering area its out of the browser area only after 1 time the no button is out of reach so i cant press the no button anymore",
+          "i want the no button to be inside the browser so its clickable ... and it appears 10 times and shift its position like runnung mouse"
         ]
       },
       "acceptanceCriteria": [
-        "On desktop, repeatedly triggering No-button evasion (hover/click) never results in the No button being partially or fully off-screen.",
-        "On mobile, repeatedly triggering No-button evasion (tap/touch) never results in the No button being partially or fully off-screen.",
-        "After each evade, the No button remains reachable (not covered by other UI, not positioned outside the visible area, and still responds to the next interaction)."
+        "After each evasive movement, the “No” button’s bounding box stays fully inside the current viewport (no part renders off-screen).",
+        "The “No” button can be repeatedly clicked/hovered and remains reachable/clickable after the first move and on subsequent moves.",
+        "The “No” button evades the cursor and changes position exactly 10 times (or up to 10 times, stopping after the 10th successful evade attempt), consistent across desktop and mobile viewport sizes.",
+        "Behavior remains stable if the viewport size changes (e.g., rotating a phone or resizing the browser): the button position is clamped/repositioned to stay visible."
       ]
     },
     {
-      "id": "REQ-22",
-      "text": "Ensure the proposal flow continues correctly after the positioning fix: the No button reliably performs 7 successful evasions and only then reveals the Yes button, with behavior consistent across desktop and mobile.",
+      "id": "REQ-2",
+      "text": "Repair the hidden admin interface in `frontend/index.html` so logging in with username `akash` and password `2026edit` works, and the admin can update the BF name, GF name, and the main message as intended.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-2"
+          "msg-4",
+          "msg-7"
         ],
         "quotes": [
-          "see the no button should evade 7 times but if the no button isnt available then how will the process continue"
+          "the admin hidden interface where i can update the bf and gf name and the message as well is not working when i type akash and password 2026edit",
+          "yes ... stay exactly"
         ]
       },
       "acceptanceCriteria": [
-        "The No button successfully evades at least 7 times in a row without becoming unresponsive or disappearing.",
-        "The Yes button does not appear before the 7th successful evade.",
-        "The Yes button appears reliably immediately after the 7th successful evade on both desktop and mobile."
+        "Entering username `akash` and password `2026edit` successfully unlocks the admin UI.",
+        "After unlocking, updating BF name, GF name, and the main message immediately updates what the recipient sees in the main proposal UI (without requiring a page reload, unless the existing intended behavior is to reload).",
+        "If incorrect credentials are entered, the admin UI remains locked and shows a clear error message in English.",
+        "The admin UI continues to be hidden by default and only appears via the existing hidden trigger/mechanism already present in the page."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Update backend admin verification in `backend/main.mo` so admin-gated operations use the password `2026edit` (to match the required admin credentials) and ensure frontend admin checks that call `isAdmin(...)` succeed with `2026edit`.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4",
+          "msg-7"
+        ],
+        "quotes": [
+          "when i type akash and password 2026edit can u fix those",
+          "stay exactly"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Calling `isAdmin(\"2026edit\")` returns `true`.",
+        "Any backend admin-gated functions that rely on the admin password accept `2026edit` and reject other passwords.",
+        "The hidden admin interface can successfully perform its backend admin actions (e.g., retrieving responses) after logging in with `akash` / `2026edit`."
       ]
     }
   ],
   "constraints": [
-    "Implement the fix within the existing single-page implementation in `frontend/index.html` (no new backend dependencies).",
-    "Do not edit any frontend files listed as immutable in SYSTEM_CONTEXT.",
-    "Keep all user-facing text in English."
+    "Frontend must not modify files under `frontend/src/components/ui` or any paths listed in `frontend.immutablePaths` (compose them instead if needed).",
+    "Backend must remain a single Motoko actor in `backend/main.mo`.",
+    "Use English for any user-facing text added or changed."
   ],
   "nonGoals": [
-    "Adding new features unrelated to No-button evasion (e.g., new animations, new admin features, new audio tracks).",
-    "Backend (Motoko) changes or persistence/schema changes."
+    "Adding a new authentication provider or third-party login (only the existing hidden admin credentials are in scope).",
+    "Introducing external databases or additional backend services.",
+    "Redesigning the entire Valentine experience flow beyond fixing the out-of-bounds “No” button and the broken admin login/update capability."
   ],
   "imageRequirements": {
     "required": [],

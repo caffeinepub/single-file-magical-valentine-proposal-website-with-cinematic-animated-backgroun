@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T16:26:51.640Z",
+  "generatedAt": "2026-02-13T16:41:42.382Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-21",
-        "summary": "Fix the “No” button evasion positioning logic in `frontend/index.html` so the No button never moves outside the visible viewport safe area (i.e., it remains fully visible and clickable/tappable at all times), preventing it from disappearing after ~2 evasions.",
+        "id": "REQ-1",
+        "summary": "Fix the evasive “No” button behavior in `frontend/index.html` so it always remains fully within the visible browser viewport (including after the first move), stays clickable, and continues to evade the cursor for up to 10 moves as intended.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/index.html"
@@ -22,11 +22,23 @@
         ]
       },
       {
-        "id": "REQ-22",
-        "summary": "Ensure the proposal flow continues correctly after the positioning fix: the No button reliably performs 7 successful evasions and only then reveals the Yes button, with behavior consistent across desktop and mobile.",
+        "id": "REQ-2",
+        "summary": "Repair the hidden admin interface in `frontend/index.html` so logging in with username `akash` and password `2026edit` works, and the admin can update the BF name, GF name, and the main message as intended.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/index.html"
+        ],
+        "matchedFiles": [
+          "frontend/index.html"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Update backend admin verification in `backend/main.mo` so admin-gated operations use the password `2026edit` (to match the required admin credentials) and ensure frontend admin checks that call `isAdmin(...)` succeed with `2026edit`.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/index.html",
+          "frontend/src/valentine/backendClient.ts"
         ],
         "matchedFiles": [
           "frontend/index.html"
@@ -35,6 +47,7 @@
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",

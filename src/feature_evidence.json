@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-no-button-evasion-positioning-logic-in-frontend-index-html-so-the-no-button-never-moves-outside-the-visible-viewport-safe-area-i-e-it-remains-fully-visible-and-clickable-tappable-at-all-times-preventing-it-from-disappearing-after-2-evasions",
-      "featureTitle": "Fix the “No” button evasion positioning logic in `frontend/index.html` so the No button never moves outside the visible viewport safe area (i.e., it remains fully visible and clickable/tappable at all times), preventing it from disappearing after ~2 evasions.",
+      "featureId": "feature-fix-the-evasive-no-button-behavior-in-frontend-index-html-so-it-always-remains-fully-within-the-visible-browser-viewport-including-after-the-first-move-stays-clickable-and-continues-to-evade-the-cursor-for-up-to-10-moves-as-intended",
+      "featureTitle": "Fix the evasive “No” button behavior in `frontend/index.html` so it always remains fully within the visible browser viewport (including after the first move), stays clickable, and continues to evade the cursor for up to 10 moves as intended.",
       "files": [
         "frontend/index.html"
       ],
@@ -15,13 +15,13 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-21"
+        "REQ-1"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-proposal-flow-continues-correctly-after-the-positioning-fix-the-no-button-reliably-performs-7-successful-evasions-and-only-then-reveals-the-yes-button-with-behavior-consistent-across-desktop-and-mobile",
-      "featureTitle": "Ensure the proposal flow continues correctly after the positioning fix: the No button reliably performs 7 successful evasions and only then reveals the Yes button, with behavior consistent across desktop and mobile.",
+      "featureId": "feature-repair-the-hidden-admin-interface-in-frontend-index-html-so-logging-in-with-username-akash-and-password-2026edit-works-and-the-admin-can-update-the-bf-name-gf-name-and-the-main-message-as-intended",
+      "featureTitle": "Repair the hidden admin interface in `frontend/index.html` so logging in with username `akash` and password `2026edit` works, and the admin can update the BF name, GF name, and the main message as intended.",
       "files": [
         "frontend/index.html"
       ],
@@ -33,7 +33,25 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-22"
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-backend-admin-verification-in-backend-main-mo-so-admin-gated-operations-use-the-password-2026edit-to-match-the-required-admin-credentials-and-ensure-frontend-admin-checks-that-call-isadmin-succeed-with-2026edit",
+      "featureTitle": "Update backend admin verification in `backend/main.mo` so admin-gated operations use the password `2026edit` (to match the required admin credentials) and ensure frontend admin checks that call `isAdmin(...)` succeed with `2026edit`.",
+      "files": [
+        "frontend/index.html"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
       ],
       "confidence": "high"
     }

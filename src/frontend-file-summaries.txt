@@ -1,4 +1,5 @@
 {
-  "frontend/index.html": "Complete single-file Valentine proposal website with robust No-button evasion that keeps the button fully within viewport bounds for all 7 required evasions using proper position clamping with safe padding, unified interaction handlers for desktop and mobile, and resize/orientation handling to prevent off-screen positioning.",
-  "frontend/src/App.tsx": "Minimal React app component that redirects to the standalone Valentine's proposal HTML page while preserving query parameters (including ?data= share links) during the redirect."
+  "frontend/index.html": "Complete standalone Valentine's Day proposal page with viewport-clamped cursor-avoiding No button (exactly 10 moves, always stays within screen bounds), Forever audio autoplay, boba tea question with backend response recording, fixed admin login (username: akash, password: 2026edit) with live UI updates for BF/GF names and message, response viewer, corner image configuration, and Valentine decorations.",
+  "frontend/src/App.tsx": "Minimal React app component that redirects to the standalone Valentine's proposal HTML page while preserving query parameters (including ?data= share links) during the redirect.",
+  "frontend/src/valentine/backendClient.ts": "Vanilla JavaScript/TypeScript backend client wrapper that uses the project's standard createActorWithConfig function to initialize the backend actor and provides functions to record responses, validate admin access, and fetch all stored responses from the canister."
 }

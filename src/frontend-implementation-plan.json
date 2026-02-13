@@ -1,37 +1,60 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Keep No button always in-viewport and complete 7 evasions reliably",
+  "title": "Fix No button viewport bounds and restore hidden admin login + updates",
   "requirements": [
     {
-      "id": "REQ-21",
-      "summary": "Clamp No-button evasion positions to the visible viewport safe area so it never goes off-screen on desktop or mobile.",
+      "id": "REQ-1",
+      "summary": "Clamp evasive “No” button repositioning so it stays fully inside the viewport and evades up to 10 times across resize/mobile.",
       "acceptanceCriteria": [
-        "On desktop, repeatedly triggering No-button evasion (hover/click) never results in the No button being partially or fully off-screen.",
-        "On mobile, repeatedly triggering No-button evasion (tap/touch) never results in the No button being partially or fully off-screen.",
-        "After each evade, the No button remains reachable (not covered by other UI, not positioned outside the visible area, and still responds to the next interaction)."
+        "After each evasive movement, the “No” button’s bounding box stays fully inside the current viewport (no part renders off-screen).",
+        "The “No” button can be repeatedly clicked/hovered and remains reachable/clickable after the first move and on subsequent moves.",
+        "The “No” button evades the cursor and changes position exactly 10 times (or up to 10 times, stopping after the 10th successful evade attempt), consistent across desktop and mobile viewport sizes.",
+        "Behavior remains stable if the viewport size changes (e.g., rotating a phone or resizing the browser): the button position is clamped/repositioned to stay visible."
       ],
       "file_operations": [
         {
           "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Update the No button evasion positioning logic to compute a safe in-viewport position every time: measure the No button size, use the current visible viewport bounds (accounting for mobile visual viewport when available), apply a consistent padding margin, and clamp the target X/Y so the entire button stays fully visible. Also ensure resize/orientation changes re-validate/re-clamp the current No button position so it cannot become off-screen after layout changes."
+          "description": "Update the existing cursor-evade logic for the “No” button to compute candidate positions using the button’s real rendered size (getBoundingClientRect), then clamp left/top so the full bounding box remains within window.innerWidth/innerHeight for every move (including after the first move). Enforce a single move counter that stops repositioning after 10 successful evade moves. Add a resize/orientationchange handler that re-clamps (or re-randomizes + clamps) the current button position to stay visible, preserving clickability on desktop and mobile."
         }
       ]
     },
     {
-      "id": "REQ-22",
-      "summary": "Make the proposal flow deterministic: exactly 7 successful No-button evasions, then reveal the Yes button consistently on desktop and mobile.",
+      "id": "REQ-2",
+      "summary": "Restore the hidden admin interface login (akash / 2026edit) and ensure admin edits update BF/GF names and main message in the visible UI.",
       "acceptanceCriteria": [
-        "The No button successfully evades at least 7 times in a row without becoming unresponsive or disappearing.",
-        "The Yes button does not appear before the 7th successful evade.",
-        "The Yes button appears reliably immediately after the 7th successful evade on both desktop and mobile."
+        "Entering username `akash` and password `2026edit` successfully unlocks the admin UI.",
+        "After unlocking, updating BF name, GF name, and the main message immediately updates what the recipient sees in the main proposal UI (without requiring a page reload, unless the existing intended behavior is to reload).",
+        "If incorrect credentials are entered, the admin UI remains locked and shows a clear error message in English.",
+        "The admin UI continues to be hidden by default and only appears via the existing hidden trigger/mechanism already present in the page."
       ],
       "file_operations": [
         {
           "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Harden the evasion counter and interaction handling so each user attempt triggers at most one evade increment (avoid double-counting from overlapping mouse/touch/pointer events). Ensure the No button remains interactive through 7 evasions by using a single unified interaction handler (pointer/mouse/touch as appropriate) that always calls the clamped reposition routine and updates the message. After the 7th successful evade, stop further evasion, keep the No button from interfering, and reveal the Yes button immediately (and only then), with the same behavior across desktop and mobile."
+          "description": "Fix the existing hidden admin login flow to accept username `akash` and password `2026edit`, keep the admin panel hidden by default, and preserve the current hidden trigger mechanism. Ensure incorrect credentials keep the UI locked and render a clear English error message. After unlock, wire the admin form controls so saving BF name, GF name, and main message updates the live proposal UI immediately (update the same DOM nodes the recipient sees) and preserves any existing persistence approach already present on the page (e.g., localStorage) if intended by the original implementation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Align frontend admin checks with password `2026edit` so calls to isAdmin(...) and admin actions succeed once backend uses the updated password.",
+      "acceptanceCriteria": [
+        "Calling `isAdmin(\"2026edit\")` returns `true`.",
+        "Any backend admin-gated functions that rely on the admin password accept `2026edit` and reject other passwords.",
+        "The hidden admin interface can successfully perform its backend admin actions (e.g., retrieving responses) after logging in with `akash` / `2026edit`."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Update the admin unlock + admin actions flow to use the entered password (expected `2026edit`) consistently when calling backend admin-gated capabilities (e.g., isAdmin, getAllResponses, getResponse). Ensure the UI only enables admin actions after a successful isAdmin check, and surface an English error message if the backend rejects the password."
+        },
+        {
+          "path": "frontend/src/valentine/backendClient.ts",
+          "operation": "modify",
+          "description": "Ensure the admin helper wrappers (isAdmin, getAllResponses, and any additional admin wrappers used by the page) correctly pass through the provided admin password string without mutation, so `2026edit` is sent exactly as entered and the hidden admin UI’s backend admin checks can succeed."
         }
       ]
     }

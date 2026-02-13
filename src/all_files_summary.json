@@ -1,13 +1,14 @@
 {
-  "backend/main.mo": "Empty Motoko actor with no methods.",
-  "feature_evidence.json": "Feature evidence report listing two frontend/index.html feature fixes with metadata, components, tests, and confidence fields.",
-  "frontend-file-summaries.txt": "Prewritten summaries describing index.html as a full proposal page and App.tsx as a redirect wrapper.",
-  "frontend/index.css": "Tailwind CSS base variables, dark mode tokens, and global resets for theming and component styling.",
-  "frontend/index.html": "Main Valentine proposal page with animated visuals, intro overlay, interactive proposal flow, and evasive No-button logic.",
-  "frontend/src/App.tsx": "React component that redirects to index.html while preserving URL parameters and shows a loading screen.",
-  "frontend/src/hooks/useActor.ts": "Hook that creates and manages an authenticated or anonymous backend actor using react-query and Internet Identity.",
-  "frontend/src/hooks/useInternetIdentity.ts": "Comprehensive Internet Identity context providing login, logout, identity persistence, and auth lifecycle state.",
-  "frontend/src/main.tsx": "React entry point initializing QueryClient and InternetIdentityProvider before rendering App.",
-  "frontend/tailwind.config.js": "Tailwind configuration defining theme colors from CSS vars, extended animations, and plugin setup.",
-  "project_state.json": "Project state metadata describing the single‑file Valentine site architecture, issues, and feature requirements."
+  "backend/main.mo": "Motoko canister that stores sequentially indexed Valentine responses, checks admin access with password 2026edit, and returns single or all stored responses.",
+  "feature_evidence.json": "Feature evidence report mapping three Valentine-related features to affected files, components, and test IDs.",
+  "frontend-file-summaries.txt": "Text file summarizing major frontend files including index.html behavior, redirecting App.tsx, and backend client wrapper.",
+  "frontend/index.css": "Tailwind-based global stylesheet defining color variables, theming, and base element styling.",
+  "frontend/index.html": "Full interactive Valentine page with animations, decorations, evasive button logic, admin panel, and backend-connected response features.",
+  "frontend/src/App.tsx": "React component that immediately redirects to index.html while keeping query parameters; shows loading screen briefly.",
+  "frontend/src/hooks/useActor.ts": "React hook that initializes and caches a backend actor, updating on identity changes and managing related query invalidation.",
+  "frontend/src/hooks/useInternetIdentity.ts": "React context and provider for Internet Identity login, identity persistence, and status handling.",
+  "frontend/src/main.tsx": "Application entry that sets up React Query, Internet Identity provider, global CSS, and renders the redirecting App component.",
+  "frontend/src/valentine/backendClient.ts": "Lightweight wrapper creating a backend actor and exposing functions for recording responses and admin-gated retrieval.",
+  "frontend/tailwind.config.js": "Tailwind configuration defining color tokens, themes, animations, and plugins such as typography and container queries.",
+  "project_state.json": "Defines project state for fixing a runaway button and repairing a hidden admin login, including credentials, known bugs, and existing feature requirements. It also lists architectural notes and marks the work as a fix request."
 }
